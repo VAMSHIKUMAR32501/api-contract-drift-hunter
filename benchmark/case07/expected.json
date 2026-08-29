@@ -1,0 +1,14 @@
+{
+  "case_id": "case07",
+  "description": "Response field contains value outside documented enum",
+  "endpoint": "GET /orders/{id}",
+  "field": "status",
+  "allowed_values": [
+    "pending",
+    "approved",
+    "rejected"
+  ],
+  "actual_value": "processing",
+  "drift": true,
+  "severity": "medium"
+}

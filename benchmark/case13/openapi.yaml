@@ -1,0 +1,35 @@
+openapi: 3.0.0
+
+info:
+  title: Article API
+  version: 1.0.0
+
+paths:
+  /articles:
+    post:
+      summary: Create an article
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - tags
+              properties:
+                title:
+                  type: string
+                tags:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+
+      responses:
+        "201":
+          description: Article created
+
+        "400":
+          description: Invalid article

@@ -1,0 +1,227 @@
+[
+  {
+    "case_id": "case01",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/users/<int:user_id>\",\n      \"issue_type\": \"undocumented endpoint\",\n      \"field_or_parameter\": \"user_id\",\n      \"expected\": \"integer\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/users/<int:user_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/users/<int:user_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/users/<int:user_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"age\",\n      \"expected\": \"integer\",\n      \"actual\": \"string\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case01",
+      "expected_drifts": 1,
+      "predicted_issues": 4,
+      "true_positives": 1,
+      "false_positives": 3,
+      "false_negatives": 0,
+      "precision": 0.25,
+      "recall": 1.0,
+      "f1": 0.4
+    }
+  },
+  {
+    "case_id": "case02",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/products/<int:product_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/products/<int:product_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/products/<int:product_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"price\",\n      \"expected\": \"number\",\n      \"actual\": \"number\"\n    },\n    {\n      \"endpoint\": \"/products/<int:product_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/products/<int:product_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/products/<int:product_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"price\",\n      \"expected\": \"number\",\n      \"actual\": \"number\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case02",
+      "expected_drifts": 1,
+      "predicted_issues": 6,
+      "true_positives": 0,
+      "false_positives": 6,
+      "false_negatives": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case03",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"status\",\n      \"expected\": \"string\",\n      \"actual\": \"object\"\n    },\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"undocumented response fields\",\n      \"field_or_parameter\": \"error\",\n      \"expected\": \"undefined\",\n      \"actual\": \"object\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case03",
+      "expected_drifts": 1,
+      "predicted_issues": 3,
+      "true_positives": 0,
+      "false_positives": 3,
+      "false_negatives": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case04",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"email\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"undocumented response fields\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"undocumented response fields\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"undocumented response fields\",\n      \"field_or_parameter\": \"email\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"email\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case04",
+      "expected_drifts": 1,
+      "predicted_issues": 9,
+      "true_positives": 0,
+      "false_positives": 9,
+      "false_negatives": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case05",
+    "baseline_output": "{\n  \"issues\": []\n}",
+    "evaluation": {
+      "case_id": "case05",
+      "expected_drifts": 1,
+      "predicted_issues": 0,
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case06",
+    "baseline_output": "{\n  \"issues\": []\n}",
+    "evaluation": {
+      "case_id": "case06",
+      "expected_drifts": 1,
+      "predicted_issues": 0,
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case07",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"status\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"status\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/orders/<int:order_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"status\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case07",
+      "expected_drifts": 1,
+      "predicted_issues": 6,
+      "true_positives": 0,
+      "false_positives": 6,
+      "false_negatives": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case08",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/employees/<int:employee_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"integer\"\n    },\n    {\n      \"endpoint\": \"/employees/<int:employee_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/employees/<int:employee_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"department\",\n      \"expected\": \"string\",\n      \"actual\": \"None\"\n    },\n    {\n      \"endpoint\": \"/employees/<int:employee_id>\",\n      \"issue_type\": \"undocumented response field\",\n      \"field_or_parameter\": \"department\",\n      \"expected\": \"string\",\n      \"actual\": \"None\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case08",
+      "expected_drifts": 1,
+      "predicted_issues": 4,
+      "true_positives": 0,
+      "false_positives": 4,
+      "false_negatives": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case09",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"amount\",\n      \"expected\": \"number\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"number\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"status\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"message\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"missing required field\",\n      \"field_or_parameter\": \"amount\",\n      \"expected\": \"amount\",\n      \"actual\": \"missing\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"missing required field\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"id\",\n      \"actual\": \"missing\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"missing required field\",\n      \"field_or_parameter\": \"status\",\n      \"expected\": \"status\",\n      \"actual\": \"missing\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"missing required field\",\n      \"field_or_parameter\": \"message\",\n      \"expected\": \"message\",\n      \"actual\": \"missing\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"error response schema mismatch\",\n      \"field_or_parameter\": \"error\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"error response schema mismatch\",\n      \"field_or_parameter\": \"code\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"undocumented response fields\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"id\",\n      \"actual\": \"id\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"undocumented response fields\",\n      \"field_or_parameter\": \"status\",\n      \"expected\": \"status\",\n      \"actual\": \"status\"\n    },\n    {\n      \"endpoint\": \"/payments\",\n      \"issue_type\": \"undocumented response fields\",\n      \"field_or_parameter\": \"message\",\n      \"expected\": \"message\",\n      \"actual\": \"message\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case09",
+      "expected_drifts": 1,
+      "predicted_issues": 13,
+      "true_positives": 0,
+      "false_positives": 13,
+      "false_negatives": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case10",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"id\",\n      \"expected\": \"integer\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"age\",\n      \"expected\": \"integer\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"response type mismatches\",\n      \"field_or_parameter\": \"status\",\n      \"expected\": \"string\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"undocumented response fields\",\n      \"field_or_parameter\": \"email\",\n      \"expected\": \"undefined\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/customers/<int:customer_id>\",\n      \"issue_type\": \"error response schema mismatches\",\n      \"field_or_parameter\": \"error\",\n      \"expected\": \"undefined\",\n      \"actual\": \"string\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case10",
+      "expected_drifts": 5,
+      "predicted_issues": 6,
+      "true_positives": 3,
+      "false_positives": 3,
+      "false_negatives": 2,
+      "precision": 0.5,
+      "recall": 0.6,
+      "f1": 0.545
+    }
+  },
+  {
+    "case_id": "case11",
+    "baseline_output": "{\n  \"issues\": []\n}",
+    "evaluation": {
+      "case_id": "case11",
+      "expected_drifts": 1,
+      "predicted_issues": 0,
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case12",
+    "baseline_output": "{\n  \"issues\": []\n}",
+    "evaluation": {
+      "case_id": "case12",
+      "expected_drifts": 1,
+      "predicted_issues": 0,
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case13",
+    "baseline_output": "{\n  \"issues\": []\n}",
+    "evaluation": {
+      "case_id": "case13",
+      "expected_drifts": 1,
+      "predicted_issues": 0,
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case14",
+    "baseline_output": "{\n  \"issues\": []\n}",
+    "evaluation": {
+      "case_id": "case14",
+      "expected_drifts": 1,
+      "predicted_issues": 0,
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 1,
+      "precision": 0,
+      "recall": 0.0,
+      "f1": 0
+    }
+  },
+  {
+    "case_id": "case15",
+    "baseline_output": "{\n  \"issues\": [\n    {\n      \"endpoint\": \"/products\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"items\",\n      \"expected\": \"array of strings\",\n      \"actual\": \"string\"\n    },\n    {\n      \"endpoint\": \"/products/<int:product_id>\",\n      \"issue_type\": \"response type mismatch\",\n      \"field_or_parameter\": \"name\",\n      \"expected\": \"string\",\n      \"actual\": \"Laptop\"\n    },\n    {\n      \"endpoint\": \"/admin/export\",\n      \"issue_type\": \"undocumented endpoint\",\n      \"field_or_parameter\": \"none\",\n      \"expected\": \"none\",\n      \"actual\": \"none\"\n    }\n  ]\n}",
+    "evaluation": {
+      "case_id": "case15",
+      "expected_drifts": 1,
+      "predicted_issues": 3,
+      "true_positives": 1,
+      "false_positives": 2,
+      "false_negatives": 0,
+      "precision": 0.333,
+      "recall": 1.0,
+      "f1": 0.5
+    }
+  }
+]

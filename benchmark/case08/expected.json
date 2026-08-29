@@ -1,0 +1,10 @@
+{
+  "case_id": "case08",
+  "description": "Non-nullable response field returned as null",
+  "endpoint": "GET /employees/{id}",
+  "field": "department",
+  "expected_type": "string",
+  "actual_type": "null",
+  "drift": true,
+  "severity": "high"
+}

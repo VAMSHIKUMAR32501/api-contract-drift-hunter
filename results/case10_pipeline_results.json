@@ -1,0 +1,589 @@
+{
+  "case_id": "case10",
+  "base_url": "http://127.0.0.1:5009",
+  "contract": {
+    "title": "Customer Profile API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/customers/{id}",
+        "normalized_path": "/customers/{param}",
+        "method": "GET",
+        "summary": "Get customer profile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": null,
+            "enum": null,
+            "minimum": null,
+            "maximum": null,
+            "minLength": null,
+            "maxLength": null,
+            "minItems": null,
+            "maxItems": null
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content_type": "application/json",
+            "schema_type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              },
+              "name": {
+                "type": "string",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              },
+              "age": {
+                "type": "integer",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              },
+              "status": {
+                "type": "string",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": [
+                  "active",
+                  "inactive"
+                ],
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          }
+        },
+        "request_body": null
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case10\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/customers/<int:customer_id>",
+        "normalized_path": "/customers/{param}",
+        "methods": [
+          "GET"
+        ],
+        "function": "get_customer",
+        "parameters": {
+          "customer_id": {
+            "type": "integer",
+            "location": "path",
+            "required": true
+          }
+        },
+        "query_parameters": {},
+        "request_body_fields": {},
+        "response_fields": {
+          "error": {
+            "type": "string",
+            "value": "Customer not found",
+            "source_expression": "'Customer not found'"
+          }
+        },
+        "response_fields_by_status": {
+          "200": [
+            {
+              "error": {
+                "type": "string",
+                "value": "Customer not found",
+                "source_expression": "'Customer not found'"
+              }
+            },
+            {
+              "id": {
+                "type": "string",
+                "value": null,
+                "source_expression": "str(customer_id)"
+              },
+              "name": {
+                "type": "string",
+                "value": "Sarah",
+                "source_expression": "'Sarah'"
+              },
+              "age": {
+                "type": "string",
+                "value": "28",
+                "source_expression": "'28'"
+              },
+              "status": {
+                "type": "string",
+                "value": "pending",
+                "source_expression": "'pending'"
+              },
+              "email": {
+                "type": "string",
+                "value": "sarah@example.com",
+                "source_expression": "'sarah@example.com'"
+              }
+            }
+          ]
+        },
+        "response_statuses": [
+          {
+            "status_code": 200,
+            "condition": "customer_id == 1"
+          },
+          {
+            "status_code": 200,
+            "condition": null
+          }
+        ]
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/customers/{id}",
+      "concrete_path": "/customers/1",
+      "path_parameters": {
+        "id": 1
+      },
+      "query_parameters": {},
+      "json": null
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5009",
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/customers/{id}",
+        "concrete_path": "/customers/1",
+        "path_parameters": {
+          "id": 1
+        },
+        "query_parameters": {},
+        "json": null
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/customers/{id}",
+        "method": "GET",
+        "url": "http://127.0.0.1:5009/customers/1",
+        "request": {
+          "path_parameters": {
+            "id": 1
+          },
+          "query_parameters": {},
+          "json": null
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5009): Max retries exceeded with url: /customers/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000023415F1EBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "negative_tests": [],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5009",
+    "total_tests": 0,
+    "results": []
+  },
+  "static_drifts": [
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "response_type_mismatch",
+      "field_or_parameter": "id",
+      "expected": "integer",
+      "actual": "string",
+      "evidence": {
+        "source_value": null,
+        "documented_type": "integer",
+        "observed_type": "string",
+        "source_expression": "str(customer_id)"
+      }
+    },
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "response_type_mismatch",
+      "field_or_parameter": "age",
+      "expected": "integer",
+      "actual": "string",
+      "evidence": {
+        "source_value": "28",
+        "documented_type": "integer",
+        "observed_type": "string",
+        "source_expression": "'28'"
+      }
+    },
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "response_enum_violation",
+      "field_or_parameter": "status",
+      "expected": [
+        "active",
+        "inactive"
+      ],
+      "actual": "pending",
+      "severity": "medium",
+      "evidence": {
+        "documented_enum": [
+          "active",
+          "inactive"
+        ],
+        "source_value": "pending",
+        "source_expression": "'pending'"
+      }
+    },
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "response_status_mismatch",
+      "field_or_parameter": null,
+      "expected": "404",
+      "actual": "200",
+      "severity": "high",
+      "evidence": {
+        "documented_status": 404,
+        "implementation_status": 200,
+        "source_condition": null,
+        "documented_error_statuses": [
+          404
+        ],
+        "actual_statuses": [
+          200
+        ]
+      }
+    },
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "undocumented_response_field",
+      "field_or_parameter": "email",
+      "expected": "not documented",
+      "actual": "returned",
+      "evidence": {
+        "documented": false,
+        "source_field_present": true,
+        "status_code": 200
+      }
+    }
+  ],
+  "runtime_drifts": [],
+  "combined_drifts": [
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "response_type_mismatch",
+      "field_or_parameter": "id",
+      "expected": "integer",
+      "actual": "string",
+      "evidence": {
+        "source_value": null,
+        "documented_type": "integer",
+        "observed_type": "string",
+        "source_expression": "str(customer_id)"
+      }
+    },
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "response_type_mismatch",
+      "field_or_parameter": "age",
+      "expected": "integer",
+      "actual": "string",
+      "evidence": {
+        "source_value": "28",
+        "documented_type": "integer",
+        "observed_type": "string",
+        "source_expression": "'28'"
+      }
+    },
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "response_enum_violation",
+      "field_or_parameter": "status",
+      "expected": [
+        "active",
+        "inactive"
+      ],
+      "actual": "pending",
+      "severity": "medium",
+      "evidence": {
+        "documented_enum": [
+          "active",
+          "inactive"
+        ],
+        "source_value": "pending",
+        "source_expression": "'pending'"
+      }
+    },
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "response_status_mismatch",
+      "field_or_parameter": null,
+      "expected": "404",
+      "actual": "200",
+      "severity": "high",
+      "evidence": {
+        "documented_status": 404,
+        "implementation_status": 200,
+        "source_condition": null,
+        "documented_error_statuses": [
+          404
+        ],
+        "actual_statuses": [
+          200
+        ]
+      }
+    },
+    {
+      "endpoint": "/customers/{id}",
+      "method": "GET",
+      "issue_type": "undocumented_response_field",
+      "field_or_parameter": "email",
+      "expected": "not documented",
+      "actual": "returned",
+      "evidence": {
+        "documented": false,
+        "source_field_present": true,
+        "status_code": 200
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/customers/{id}",
+        "method": "GET",
+        "issue_type": "response_status_mismatch",
+        "field_or_parameter": null,
+        "expected": "404",
+        "actual": "200",
+        "severity": "high",
+        "evidence": {
+          "documented_status": 404,
+          "implementation_status": 200,
+          "source_condition": null,
+          "documented_error_statuses": [
+            404
+          ],
+          "actual_statuses": [
+            200
+          ]
+        }
+      },
+      {
+        "endpoint": "/customers/{id}",
+        "method": "GET",
+        "issue_type": "response_type_mismatch",
+        "field_or_parameter": "age",
+        "expected": "integer",
+        "actual": "string",
+        "evidence": {
+          "source_value": "28",
+          "documented_type": "integer",
+          "observed_type": "string",
+          "source_expression": "'28'"
+        }
+      },
+      {
+        "endpoint": "/customers/{id}",
+        "method": "GET",
+        "issue_type": "undocumented_response_field",
+        "field_or_parameter": "email",
+        "expected": "not documented",
+        "actual": "returned",
+        "evidence": {
+          "documented": false,
+          "source_field_present": true,
+          "status_code": 200
+        }
+      },
+      {
+        "endpoint": "/customers/{id}",
+        "method": "GET",
+        "issue_type": "response_type_mismatch",
+        "field_or_parameter": "id",
+        "expected": "integer",
+        "actual": "string",
+        "evidence": {
+          "source_value": null,
+          "documented_type": "integer",
+          "observed_type": "string",
+          "source_expression": "str(customer_id)"
+        }
+      },
+      {
+        "endpoint": "/customers/{id}",
+        "method": "GET",
+        "issue_type": "response_enum_violation",
+        "field_or_parameter": "status",
+        "expected": [
+          "active",
+          "inactive"
+        ],
+        "actual": "pending",
+        "severity": "medium",
+        "evidence": {
+          "documented_enum": [
+            "active",
+            "inactive"
+          ],
+          "source_value": "pending",
+          "source_expression": "'pending'"
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 5,
+      "normalized_drifts": 5,
+      "high_severity": 1,
+      "medium_severity": 1,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/customers/{id}",
+        "issue_type": "response_status_mismatch",
+        "field_or_parameter": null,
+        "expected": "404",
+        "actual": "200"
+      },
+      {
+        "endpoint": "/customers/{id}",
+        "issue_type": "response_type_mismatch",
+        "field_or_parameter": "age",
+        "expected": "integer",
+        "actual": "string"
+      },
+      {
+        "endpoint": "/customers/{id}",
+        "issue_type": "undocumented_response_field",
+        "field_or_parameter": "email",
+        "expected": "not documented",
+        "actual": "returned"
+      },
+      {
+        "endpoint": "/customers/{id}",
+        "issue_type": "response_type_mismatch",
+        "field_or_parameter": "id",
+        "expected": "integer",
+        "actual": "string"
+      },
+      {
+        "endpoint": "/customers/{id}",
+        "issue_type": "response_enum_violation",
+        "field_or_parameter": "status",
+        "expected": [
+          "active",
+          "inactive"
+        ],
+        "actual": "pending"
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case10",
+    "expected_drifts": 5,
+    "predicted_issues": 5,
+    "true_positives": 5,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case10",
+    "description": "Multiple simultaneous API contract drifts",
+    "endpoint": "GET /customers/{id}",
+    "drifts": [
+      {
+        "type": "response_type_mismatch",
+        "field": "id",
+        "expected": "integer",
+        "actual": "string"
+      },
+      {
+        "type": "response_type_mismatch",
+        "field": "age",
+        "expected": "integer",
+        "actual": "string"
+      },
+      {
+        "type": "enum_mismatch",
+        "field": "status",
+        "allowed": [
+          "active",
+          "inactive"
+        ],
+        "actual": "pending"
+      },
+      {
+        "type": "undocumented_field",
+        "field": "email"
+      },
+      {
+        "type": "status_code_mismatch",
+        "condition": "customer does not exist",
+        "expected": 404,
+        "actual": 200
+      }
+    ],
+    "drift": true,
+    "drift_count": 5,
+    "severity": "high"
+  }
+}

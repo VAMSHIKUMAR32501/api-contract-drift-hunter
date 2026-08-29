@@ -1,0 +1,32 @@
+openapi: 3.0.0
+
+info:
+  title: Customer API
+  version: 1.0.0
+
+paths:
+  /customers/{id}:
+    get:
+      summary: Get a customer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - name
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string

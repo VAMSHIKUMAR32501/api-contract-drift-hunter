@@ -1,0 +1,346 @@
+{
+  "case_id": "case15",
+  "base_url": "http://127.0.0.1:5014",
+  "contract": {
+    "title": "Inventory API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/products",
+        "normalized_path": "/products",
+        "method": "GET",
+        "summary": "List products",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content_type": "application/json",
+            "schema_type": "array",
+            "properties": {}
+          }
+        },
+        "request_body": null
+      },
+      {
+        "path": "/products/{id}",
+        "normalized_path": "/products/{param}",
+        "method": "GET",
+        "summary": "Get product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": null,
+            "enum": null,
+            "minimum": null,
+            "maximum": null,
+            "minLength": null,
+            "maxLength": null,
+            "minItems": null,
+            "maxItems": null
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          }
+        },
+        "request_body": null
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case15\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/products",
+        "normalized_path": "/products",
+        "methods": [
+          "GET"
+        ],
+        "function": "get_products",
+        "parameters": {},
+        "query_parameters": {},
+        "request_body_fields": {},
+        "response_fields": {},
+        "response_fields_by_status": {},
+        "response_statuses": []
+      },
+      {
+        "path": "/products/<int:product_id>",
+        "normalized_path": "/products/{param}",
+        "methods": [
+          "GET"
+        ],
+        "function": "get_product",
+        "parameters": {
+          "product_id": {
+            "type": "integer",
+            "location": "path",
+            "required": true
+          }
+        },
+        "query_parameters": {},
+        "request_body_fields": {},
+        "response_fields": {
+          "id": {
+            "type": "unknown",
+            "value": "product_id",
+            "source_expression": "product_id"
+          },
+          "name": {
+            "type": "string",
+            "value": "Laptop",
+            "source_expression": "'Laptop'"
+          }
+        },
+        "response_fields_by_status": {
+          "200": [
+            {
+              "id": {
+                "type": "unknown",
+                "value": "product_id",
+                "source_expression": "product_id"
+              },
+              "name": {
+                "type": "string",
+                "value": "Laptop",
+                "source_expression": "'Laptop'"
+              }
+            }
+          ]
+        },
+        "response_statuses": []
+      },
+      {
+        "path": "/admin/export",
+        "normalized_path": "/admin/export",
+        "methods": [
+          "GET"
+        ],
+        "function": "admin_export",
+        "parameters": {},
+        "query_parameters": {},
+        "request_body_fields": {},
+        "response_fields": {
+          "status": {
+            "type": "string",
+            "value": "export ready",
+            "source_expression": "'export ready'"
+          },
+          "records": {
+            "type": "integer",
+            "value": 100,
+            "source_expression": "100"
+          }
+        },
+        "response_fields_by_status": {
+          "200": [
+            {
+              "status": {
+                "type": "string",
+                "value": "export ready",
+                "source_expression": "'export ready'"
+              },
+              "records": {
+                "type": "integer",
+                "value": 100,
+                "source_expression": "100"
+              }
+            }
+          ]
+        },
+        "response_statuses": []
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/products",
+      "concrete_path": "/products",
+      "path_parameters": {},
+      "query_parameters": {},
+      "json": null
+    },
+    {
+      "method": "GET",
+      "path": "/products/{id}",
+      "concrete_path": "/products/1",
+      "path_parameters": {
+        "id": 1
+      },
+      "query_parameters": {},
+      "json": null
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5014",
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/products",
+        "concrete_path": "/products",
+        "path_parameters": {},
+        "query_parameters": {},
+        "json": null
+      },
+      {
+        "method": "GET",
+        "path": "/products/{id}",
+        "concrete_path": "/products/1",
+        "path_parameters": {
+          "id": 1
+        },
+        "query_parameters": {},
+        "json": null
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/products",
+        "method": "GET",
+        "url": "http://127.0.0.1:5014/products",
+        "request": {
+          "path_parameters": {},
+          "query_parameters": {},
+          "json": null
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5014): Max retries exceeded with url: /products (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001A306DAEBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "endpoint": "/products/{id}",
+        "method": "GET",
+        "url": "http://127.0.0.1:5014/products/1",
+        "request": {
+          "path_parameters": {
+            "id": 1
+          },
+          "query_parameters": {},
+          "json": null
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5014): Max retries exceeded with url: /products/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001A306E49090>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "negative_tests": [],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5014",
+    "total_tests": 0,
+    "results": []
+  },
+  "static_drifts": [
+    {
+      "endpoint": "/admin/export",
+      "method": "GET",
+      "issue_type": "undocumented_implementation_endpoint",
+      "field_or_parameter": null,
+      "expected": "not documented",
+      "actual": "implemented",
+      "severity": "medium",
+      "evidence": {
+        "source_path": "/admin/export",
+        "source_normalized_path": "/admin/export",
+        "source_method": "GET",
+        "documented": false,
+        "implemented": true
+      }
+    }
+  ],
+  "runtime_drifts": [],
+  "combined_drifts": [
+    {
+      "endpoint": "/admin/export",
+      "method": "GET",
+      "issue_type": "undocumented_implementation_endpoint",
+      "field_or_parameter": null,
+      "expected": "not documented",
+      "actual": "implemented",
+      "severity": "medium",
+      "evidence": {
+        "source_path": "/admin/export",
+        "source_normalized_path": "/admin/export",
+        "source_method": "GET",
+        "documented": false,
+        "implemented": true
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/admin/export",
+        "method": "GET",
+        "issue_type": "undocumented_implementation_endpoint",
+        "field_or_parameter": null,
+        "expected": "not documented",
+        "actual": "implemented",
+        "severity": "medium",
+        "evidence": {
+          "source_path": "/admin/export",
+          "source_normalized_path": "/admin/export",
+          "source_method": "GET",
+          "documented": false,
+          "implemented": true
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 1,
+      "normalized_drifts": 1,
+      "high_severity": 0,
+      "medium_severity": 1,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/admin/export",
+        "issue_type": "undocumented_implementation_endpoint",
+        "field_or_parameter": null,
+        "expected": "not documented",
+        "actual": "implemented"
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case15",
+    "expected_drifts": 1,
+    "predicted_issues": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case15",
+    "description": "API endpoint exists in implementation but is missing from the OpenAPI contract",
+    "endpoint": "GET /admin/export",
+    "expected": "not documented",
+    "actual": "implemented",
+    "drift": true,
+    "severity": "medium"
+  }
+}

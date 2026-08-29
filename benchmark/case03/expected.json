@@ -1,0 +1,10 @@
+{
+  "case_id": "case03",
+  "description": "Incorrect HTTP status code for missing resource",
+  "endpoint": "GET /orders/{id}",
+  "condition": "Order does not exist",
+  "expected_status": 404,
+  "actual_status": 200,
+  "drift": true,
+  "severity": "high"
+}

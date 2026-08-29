@@ -1,0 +1,115 @@
+{
+  "total_cases": 15,
+  "passed": 15,
+  "failed": 0,
+  "average_precision": 1.0,
+  "average_recall": 1.0,
+  "average_f1": 1.0,
+  "cases": [
+    {
+      "case_id": "case01",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case02",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case03",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case04",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case05",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case06",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case07",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case08",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case09",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case10",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case11",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case12",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case13",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case14",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "case_id": "case15",
+      "status": "PASS",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  ]
+}

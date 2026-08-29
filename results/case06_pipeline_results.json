@@ -1,0 +1,487 @@
+{
+  "case_id": "case06",
+  "base_url": "http://127.0.0.1:5005",
+  "contract": {
+    "title": "User Registration API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/users",
+        "normalized_path": "/users",
+        "method": "POST",
+        "summary": "Create a user",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "User created",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          },
+          "400": {
+            "description": "Invalid request",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          }
+        },
+        "request_body": {
+          "required": true,
+          "content_type": "application/json",
+          "schema_type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "format": null,
+              "required": true,
+              "nullable": false,
+              "enum": null,
+              "minimum": null,
+              "maximum": null,
+              "minLength": null,
+              "maxLength": null,
+              "minItems": null,
+              "maxItems": null
+            },
+            "email": {
+              "type": "string",
+              "format": null,
+              "required": true,
+              "nullable": false,
+              "enum": null,
+              "minimum": null,
+              "maximum": null,
+              "minLength": null,
+              "maxLength": null,
+              "minItems": null,
+              "maxItems": null
+            }
+          }
+        }
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case06\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/users",
+        "normalized_path": "/users",
+        "methods": [
+          "POST"
+        ],
+        "function": "create_user",
+        "parameters": {},
+        "query_parameters": {},
+        "request_body_fields": {
+          "name": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get(\"name\")",
+            "request_source": "json_body",
+            "access": "get",
+            "nullable_from_source": true,
+            "statically_typed": false
+          },
+          "email": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get(\"email\")",
+            "request_source": "json_body",
+            "access": "get",
+            "nullable_from_source": true,
+            "statically_typed": false
+          }
+        },
+        "response_fields": {
+          "name": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get('name')"
+          },
+          "email": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get('email')"
+          }
+        },
+        "response_fields_by_status": {
+          "201": [
+            {
+              "name": {
+                "type": "unknown",
+                "value": null,
+                "source_expression": "data.get('name')"
+              },
+              "email": {
+                "type": "unknown",
+                "value": null,
+                "source_expression": "data.get('email')"
+              }
+            }
+          ]
+        },
+        "response_statuses": [
+          {
+            "status_code": 201,
+            "condition": null
+          }
+        ]
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/users",
+      "concrete_path": "/users",
+      "path_parameters": {},
+      "query_parameters": {},
+      "json": {
+        "name": "test",
+        "email": "test"
+      }
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5005",
+    "requests": [
+      {
+        "method": "POST",
+        "path": "/users",
+        "concrete_path": "/users",
+        "path_parameters": {},
+        "query_parameters": {},
+        "json": {
+          "name": "test",
+          "email": "test"
+        }
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/users",
+        "method": "POST",
+        "url": "http://127.0.0.1:5005/users",
+        "request": {
+          "path_parameters": {},
+          "query_parameters": {},
+          "json": {
+            "name": "test",
+            "email": "test"
+          }
+        },
+        "status_code": 201,
+        "response_time_ms": 8.68,
+        "content_type": "application/json",
+        "body": {
+          "email": "test",
+          "name": "test"
+        },
+        "body_type": "object",
+        "fields": {
+          "email": {
+            "type": "string",
+            "value": "test",
+            "is_null": false
+          },
+          "name": {
+            "type": "string",
+            "value": "test",
+            "is_null": false
+          }
+        },
+        "error": null
+      }
+    ]
+  },
+  "negative_tests": [
+    {
+      "method": "POST",
+      "path": "/users",
+      "test_type": "required_field_violation",
+      "field": "email",
+      "body": {
+        "name": "test"
+      },
+      "expected_contract_type": "string",
+      "invalid_value": null
+    },
+    {
+      "method": "POST",
+      "path": "/users",
+      "test_type": "type_violation",
+      "field": "name",
+      "body": {
+        "name": 123,
+        "email": "test"
+      },
+      "expected_contract_type": "string",
+      "invalid_value": 123
+    },
+    {
+      "method": "POST",
+      "path": "/users",
+      "test_type": "type_violation",
+      "field": "email",
+      "body": {
+        "name": "test",
+        "email": 123
+      },
+      "expected_contract_type": "string",
+      "invalid_value": 123
+    }
+  ],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5005",
+    "total_tests": 3,
+    "results": [
+      {
+        "method": "POST",
+        "endpoint": "/users",
+        "url": "http://127.0.0.1:5005/users",
+        "test_type": "required_field_violation",
+        "field": "email",
+        "request_body": {
+          "name": "test"
+        },
+        "status_code": 201,
+        "response_body": {
+          "email": null,
+          "name": "test"
+        },
+        "response_time_ms": 21.37,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "endpoint": "/users",
+        "url": "http://127.0.0.1:5005/users",
+        "test_type": "type_violation",
+        "field": "name",
+        "request_body": {
+          "name": 123,
+          "email": "test"
+        },
+        "status_code": 201,
+        "response_body": {
+          "email": "test",
+          "name": 123
+        },
+        "response_time_ms": 31.07,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "endpoint": "/users",
+        "url": "http://127.0.0.1:5005/users",
+        "test_type": "type_violation",
+        "field": "email",
+        "request_body": {
+          "name": "test",
+          "email": 123
+        },
+        "status_code": 201,
+        "response_body": {
+          "email": 123,
+          "name": "test"
+        },
+        "response_time_ms": 15.99,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": null
+      }
+    ]
+  },
+  "static_drifts": [],
+  "runtime_drifts": [
+    {
+      "endpoint": "/users",
+      "method": "POST",
+      "issue_type": "missing_required_request_field",
+      "field_or_parameter": "email",
+      "expected": "required",
+      "actual": "missing",
+      "severity": "high",
+      "evidence": {
+        "test_type": "required_field_violation",
+        "field": "email",
+        "expected_status": 400,
+        "actual_status": 201,
+        "validation_enforced": false
+      }
+    },
+    {
+      "endpoint": "/users",
+      "method": "POST",
+      "issue_type": "request_body_type_mismatch",
+      "field_or_parameter": "name",
+      "expected": "string",
+      "actual": "integer",
+      "severity": "medium",
+      "evidence": {
+        "test_type": "type_violation",
+        "invalid_value": 123,
+        "invalid_value_type": "integer",
+        "runtime_value": 123,
+        "runtime_value_type": "integer",
+        "status_code": 201,
+        "validation_enforced": false,
+        "response_body": {
+          "email": "test",
+          "name": 123
+        }
+      }
+    },
+    {
+      "endpoint": "/users",
+      "method": "POST",
+      "issue_type": "request_body_type_mismatch",
+      "field_or_parameter": "email",
+      "expected": "string",
+      "actual": "integer",
+      "severity": "medium",
+      "evidence": {
+        "test_type": "type_violation",
+        "invalid_value": 123,
+        "invalid_value_type": "integer",
+        "runtime_value": 123,
+        "runtime_value_type": "integer",
+        "status_code": 201,
+        "validation_enforced": false,
+        "response_body": {
+          "email": 123,
+          "name": "test"
+        }
+      }
+    }
+  ],
+  "combined_drifts": [
+    {
+      "endpoint": "/users",
+      "method": "POST",
+      "issue_type": "missing_required_request_field",
+      "field_or_parameter": "email",
+      "expected": "required",
+      "actual": "missing",
+      "severity": "high",
+      "evidence": {
+        "test_type": "required_field_violation",
+        "field": "email",
+        "expected_status": 400,
+        "actual_status": 201,
+        "validation_enforced": false
+      }
+    },
+    {
+      "endpoint": "/users",
+      "method": "POST",
+      "issue_type": "request_body_type_mismatch",
+      "field_or_parameter": "name",
+      "expected": "string",
+      "actual": "integer",
+      "severity": "medium",
+      "evidence": {
+        "test_type": "type_violation",
+        "invalid_value": 123,
+        "invalid_value_type": "integer",
+        "runtime_value": 123,
+        "runtime_value_type": "integer",
+        "status_code": 201,
+        "validation_enforced": false,
+        "response_body": {
+          "email": "test",
+          "name": 123
+        }
+      }
+    },
+    {
+      "endpoint": "/users",
+      "method": "POST",
+      "issue_type": "request_body_type_mismatch",
+      "field_or_parameter": "email",
+      "expected": "string",
+      "actual": "integer",
+      "severity": "medium",
+      "evidence": {
+        "test_type": "type_violation",
+        "invalid_value": 123,
+        "invalid_value_type": "integer",
+        "runtime_value": 123,
+        "runtime_value_type": "integer",
+        "status_code": 201,
+        "validation_enforced": false,
+        "response_body": {
+          "email": 123,
+          "name": "test"
+        }
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/users",
+        "method": "POST",
+        "issue_type": "missing_required_request_field",
+        "field_or_parameter": "email",
+        "expected": "required",
+        "actual": "missing",
+        "severity": "high",
+        "evidence": {
+          "test_type": "required_field_violation",
+          "field": "email",
+          "expected_status": 400,
+          "actual_status": 201,
+          "validation_enforced": false
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 3,
+      "normalized_drifts": 1,
+      "high_severity": 1,
+      "medium_severity": 0,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/users",
+        "issue_type": "missing_required_request_field",
+        "field_or_parameter": "email",
+        "expected": "required",
+        "actual": "missing"
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case06",
+    "expected_drifts": 1,
+    "predicted_issues": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case06",
+    "description": "Missing validation for required request field",
+    "endpoint": "POST /users",
+    "field": "email",
+    "condition": "email is missing from request body",
+    "expected_status": 400,
+    "actual_status": 201,
+    "drift": true,
+    "severity": "high"
+  }
+}

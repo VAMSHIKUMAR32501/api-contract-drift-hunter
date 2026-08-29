@@ -1,0 +1,11 @@
+{
+  "case_id": "case06",
+  "description": "Missing validation for required request field",
+  "endpoint": "POST /users",
+  "field": "email",
+  "condition": "email is missing from request body",
+  "expected_status": 400,
+  "actual_status": 201,
+  "drift": true,
+  "severity": "high"
+}

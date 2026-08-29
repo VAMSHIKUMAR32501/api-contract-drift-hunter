@@ -1,0 +1,12 @@
+{
+  "case_id": "case14",
+  "description": "String minimum length constraint is not enforced",
+  "endpoint": "POST /profiles",
+  "field": "username",
+  "constraint": "minimum length 3",
+  "test_value": "ab",
+  "expected_status": 400,
+  "actual_status": 201,
+  "drift": true,
+  "severity": "medium"
+}

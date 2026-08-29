@@ -1,0 +1,42 @@
+openapi: 3.0.0
+
+info:
+  title: Cart API
+  version: 1.0.0
+
+paths:
+  /cart/items:
+    post:
+      summary: Add an item to the cart
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - product_id
+                - quantity
+              properties:
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+                  minimum: 1
+
+      responses:
+        "201":
+          description: Item added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product_id:
+                    type: integer
+                  quantity:
+                    type: integer
+
+        "400":
+          description: Invalid request

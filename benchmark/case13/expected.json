@@ -1,0 +1,12 @@
+{
+  "case_id": "case13",
+  "description": "Array minimum item constraint is not enforced",
+  "endpoint": "POST /articles",
+  "field": "tags",
+  "constraint": "minimum 1 item",
+  "test_value": [],
+  "expected_status": 400,
+  "actual_status": 201,
+  "drift": true,
+  "severity": "medium"
+}

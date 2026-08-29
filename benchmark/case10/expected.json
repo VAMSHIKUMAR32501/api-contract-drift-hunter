@@ -1,0 +1,41 @@
+{
+  "case_id": "case10",
+  "description": "Multiple simultaneous API contract drifts",
+  "endpoint": "GET /customers/{id}",
+  "drifts": [
+    {
+      "type": "response_type_mismatch",
+      "field": "id",
+      "expected": "integer",
+      "actual": "string"
+    },
+    {
+      "type": "response_type_mismatch",
+      "field": "age",
+      "expected": "integer",
+      "actual": "string"
+    },
+    {
+      "type": "enum_mismatch",
+      "field": "status",
+      "allowed": [
+        "active",
+        "inactive"
+      ],
+      "actual": "pending"
+    },
+    {
+      "type": "undocumented_field",
+      "field": "email"
+    },
+    {
+      "type": "status_code_mismatch",
+      "condition": "customer does not exist",
+      "expected": 404,
+      "actual": 200
+    }
+  ],
+  "drift": true,
+  "drift_count": 5,
+  "severity": "high"
+}

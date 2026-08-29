@@ -1,0 +1,10 @@
+{
+  "case_id": "case01",
+  "description": "Response field type mismatch",
+  "endpoint": "GET /users/{id}",
+  "field": "age",
+  "expected_type": "integer",
+  "actual_type": "string",
+  "drift": true,
+  "severity": "medium"
+}

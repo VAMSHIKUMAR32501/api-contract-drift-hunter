@@ -1,0 +1,32 @@
+openapi: 3.0.0
+
+info:
+  title: User Registration API
+  version: 1.0.0
+
+paths:
+  /users:
+    post:
+      summary: Create a user
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+
+      responses:
+        "201":
+          description: User created
+
+        "400":
+          description: Invalid request

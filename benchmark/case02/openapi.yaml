@@ -1,0 +1,35 @@
+openapi: 3.0.0
+
+info:
+  title: Product API
+  version: 1.0.0
+
+paths:
+  /products/{id}:
+    get:
+      summary: Get a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - name
+                  - price
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  price:
+                    type: number

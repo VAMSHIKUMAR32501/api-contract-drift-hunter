@@ -1,0 +1,12 @@
+{
+  "case_id": "case12",
+  "description": "Numeric request constraint is not enforced",
+  "endpoint": "POST /ratings",
+  "field": "rating",
+  "constraint": "minimum 1 and maximum 5",
+  "test_value": 10,
+  "expected_status": 400,
+  "actual_status": 201,
+  "drift": true,
+  "severity": "high"
+}

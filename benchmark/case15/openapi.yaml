@@ -1,0 +1,35 @@
+openapi: 3.0.0
+
+info:
+  title: Inventory API
+  version: 1.0.0
+
+paths:
+  /products:
+    get:
+      summary: List products
+
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /products/{id}:
+    get:
+      summary: Get product
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Successful response

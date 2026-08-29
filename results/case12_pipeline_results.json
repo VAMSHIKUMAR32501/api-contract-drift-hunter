@@ -1,0 +1,398 @@
+{
+  "case_id": "case12",
+  "base_url": "http://127.0.0.1:5011",
+  "contract": {
+    "title": "Rating API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/ratings",
+        "normalized_path": "/ratings",
+        "method": "POST",
+        "summary": "Submit a rating",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Rating submitted",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          },
+          "400": {
+            "description": "Invalid rating",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          }
+        },
+        "request_body": {
+          "required": true,
+          "content_type": "application/json",
+          "schema_type": "object",
+          "properties": {
+            "rating": {
+              "type": "integer",
+              "format": null,
+              "required": true,
+              "nullable": false,
+              "enum": null,
+              "minimum": 1,
+              "maximum": 5,
+              "minLength": null,
+              "maxLength": null,
+              "minItems": null,
+              "maxItems": null
+            }
+          }
+        }
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case12\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/ratings",
+        "normalized_path": "/ratings",
+        "methods": [
+          "POST"
+        ],
+        "function": "submit_rating",
+        "parameters": {},
+        "query_parameters": {},
+        "request_body_fields": {
+          "rating": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get(\"rating\")",
+            "request_source": "json_body",
+            "access": "get",
+            "nullable_from_source": true,
+            "statically_typed": false
+          }
+        },
+        "response_fields": {
+          "rating": {
+            "type": "unknown",
+            "value": "rating",
+            "source_expression": "rating"
+          },
+          "status": {
+            "type": "string",
+            "value": "accepted",
+            "source_expression": "'accepted'"
+          }
+        },
+        "response_fields_by_status": {
+          "201": [
+            {
+              "rating": {
+                "type": "unknown",
+                "value": "rating",
+                "source_expression": "rating"
+              },
+              "status": {
+                "type": "string",
+                "value": "accepted",
+                "source_expression": "'accepted'"
+              }
+            }
+          ]
+        },
+        "response_statuses": [
+          {
+            "status_code": 201,
+            "condition": null
+          }
+        ]
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/ratings",
+      "concrete_path": "/ratings",
+      "path_parameters": {},
+      "query_parameters": {},
+      "json": {
+        "rating": 1
+      }
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5011",
+    "requests": [
+      {
+        "method": "POST",
+        "path": "/ratings",
+        "concrete_path": "/ratings",
+        "path_parameters": {},
+        "query_parameters": {},
+        "json": {
+          "rating": 1
+        }
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/ratings",
+        "method": "POST",
+        "url": "http://127.0.0.1:5011/ratings",
+        "request": {
+          "path_parameters": {},
+          "query_parameters": {},
+          "json": {
+            "rating": 1
+          }
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5011): Max retries exceeded with url: /ratings (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001856F18EBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "negative_tests": [
+    {
+      "method": "POST",
+      "path": "/ratings",
+      "test_type": "required_field_violation",
+      "field": "rating",
+      "body": {},
+      "expected_contract_type": "integer",
+      "invalid_value": null
+    },
+    {
+      "method": "POST",
+      "path": "/ratings",
+      "test_type": "type_violation",
+      "field": "rating",
+      "body": {
+        "rating": "2"
+      },
+      "expected_contract_type": "integer",
+      "invalid_value": "2"
+    },
+    {
+      "method": "POST",
+      "path": "/ratings",
+      "test_type": "minimum_violation",
+      "field": "rating",
+      "body": {
+        "rating": 0
+      },
+      "expected_contract_type": null,
+      "invalid_value": 0
+    },
+    {
+      "method": "POST",
+      "path": "/ratings",
+      "test_type": "maximum_violation",
+      "field": "rating",
+      "body": {
+        "rating": 6
+      },
+      "expected_contract_type": null,
+      "invalid_value": 6
+    }
+  ],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5011",
+    "total_tests": 4,
+    "results": [
+      {
+        "method": "POST",
+        "endpoint": "/ratings",
+        "url": "http://127.0.0.1:5011/ratings",
+        "test_type": "required_field_violation",
+        "field": "rating",
+        "request_body": {},
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5011): Max retries exceeded with url: /ratings (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001856F229090>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/ratings",
+        "url": "http://127.0.0.1:5011/ratings",
+        "test_type": "type_violation",
+        "field": "rating",
+        "request_body": {
+          "rating": "2"
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5011): Max retries exceeded with url: /ratings (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001856F229950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/ratings",
+        "url": "http://127.0.0.1:5011/ratings",
+        "test_type": "minimum_violation",
+        "field": "rating",
+        "request_body": {
+          "rating": 0
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5011): Max retries exceeded with url: /ratings (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001856F22D6E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/ratings",
+        "url": "http://127.0.0.1:5011/ratings",
+        "test_type": "maximum_violation",
+        "field": "rating",
+        "request_body": {
+          "rating": 6
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5011): Max retries exceeded with url: /ratings (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001856F22CB00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "static_drifts": [],
+  "runtime_drifts": [
+    {
+      "endpoint": "/ratings",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "rating",
+      "expected": "minimum 1",
+      "actual": "0 accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "minimum_violation",
+        "invalid_value": 0,
+        "status_code": null,
+        "validation_enforced": false
+      }
+    },
+    {
+      "endpoint": "/ratings",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "rating",
+      "expected": "maximum 5",
+      "actual": "6 accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "maximum_violation",
+        "invalid_value": 6,
+        "status_code": null,
+        "validation_enforced": false
+      }
+    }
+  ],
+  "combined_drifts": [
+    {
+      "endpoint": "/ratings",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "rating",
+      "expected": "minimum 1",
+      "actual": "0 accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "minimum_violation",
+        "invalid_value": 0,
+        "status_code": null,
+        "validation_enforced": false
+      }
+    },
+    {
+      "endpoint": "/ratings",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "rating",
+      "expected": "maximum 5",
+      "actual": "6 accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "maximum_violation",
+        "invalid_value": 6,
+        "status_code": null,
+        "validation_enforced": false
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/ratings",
+        "method": "POST",
+        "issue_type": "constraint_mismatch",
+        "field_or_parameter": "rating",
+        "expected": "minimum 1",
+        "actual": "0 accepted",
+        "severity": "high",
+        "evidence": {
+          "test_type": "minimum_violation",
+          "invalid_value": 0,
+          "status_code": null,
+          "validation_enforced": false
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 2,
+      "normalized_drifts": 1,
+      "high_severity": 1,
+      "medium_severity": 0,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/ratings",
+        "issue_type": "constraint_mismatch",
+        "field_or_parameter": "rating",
+        "expected": "minimum 1",
+        "actual": "0 accepted"
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case12",
+    "expected_drifts": 1,
+    "predicted_issues": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case12",
+    "description": "Numeric request constraint is not enforced",
+    "endpoint": "POST /ratings",
+    "field": "rating",
+    "constraint": "minimum 1 and maximum 5",
+    "test_value": 10,
+    "expected_status": 400,
+    "actual_status": 201,
+    "drift": true,
+    "severity": "high"
+  }
+}

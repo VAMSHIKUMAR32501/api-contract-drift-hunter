@@ -1,0 +1,36 @@
+openapi: 3.0.0
+
+info:
+  title: Employee API
+  version: 1.0.0
+
+paths:
+  /employees/{id}:
+    get:
+      summary: Get an employee
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - name
+                  - department
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  department:
+                    type: string

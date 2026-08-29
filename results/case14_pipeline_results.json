@@ -1,0 +1,398 @@
+{
+  "case_id": "case14",
+  "base_url": "http://127.0.0.1:5013",
+  "contract": {
+    "title": "Profile API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/profiles",
+        "normalized_path": "/profiles",
+        "method": "POST",
+        "summary": "Create a profile",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Profile created",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          },
+          "400": {
+            "description": "Invalid username",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          }
+        },
+        "request_body": {
+          "required": true,
+          "content_type": "application/json",
+          "schema_type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "format": null,
+              "required": true,
+              "nullable": false,
+              "enum": null,
+              "minimum": null,
+              "maximum": null,
+              "minLength": 3,
+              "maxLength": 20,
+              "minItems": null,
+              "maxItems": null
+            }
+          }
+        }
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case14\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/profiles",
+        "normalized_path": "/profiles",
+        "methods": [
+          "POST"
+        ],
+        "function": "create_profile",
+        "parameters": {},
+        "query_parameters": {},
+        "request_body_fields": {
+          "username": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get(\"username\")",
+            "request_source": "json_body",
+            "access": "get",
+            "nullable_from_source": true,
+            "statically_typed": false
+          }
+        },
+        "response_fields": {
+          "username": {
+            "type": "unknown",
+            "value": "username",
+            "source_expression": "username"
+          },
+          "status": {
+            "type": "string",
+            "value": "created",
+            "source_expression": "'created'"
+          }
+        },
+        "response_fields_by_status": {
+          "201": [
+            {
+              "username": {
+                "type": "unknown",
+                "value": "username",
+                "source_expression": "username"
+              },
+              "status": {
+                "type": "string",
+                "value": "created",
+                "source_expression": "'created'"
+              }
+            }
+          ]
+        },
+        "response_statuses": [
+          {
+            "status_code": 201,
+            "condition": null
+          }
+        ]
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/profiles",
+      "concrete_path": "/profiles",
+      "path_parameters": {},
+      "query_parameters": {},
+      "json": {
+        "username": "aaa"
+      }
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5013",
+    "requests": [
+      {
+        "method": "POST",
+        "path": "/profiles",
+        "concrete_path": "/profiles",
+        "path_parameters": {},
+        "query_parameters": {},
+        "json": {
+          "username": "aaa"
+        }
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/profiles",
+        "method": "POST",
+        "url": "http://127.0.0.1:5013/profiles",
+        "request": {
+          "path_parameters": {},
+          "query_parameters": {},
+          "json": {
+            "username": "aaa"
+          }
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5013): Max retries exceeded with url: /profiles (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000193192AEBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "negative_tests": [
+    {
+      "method": "POST",
+      "path": "/profiles",
+      "test_type": "required_field_violation",
+      "field": "username",
+      "body": {},
+      "expected_contract_type": "string",
+      "invalid_value": null
+    },
+    {
+      "method": "POST",
+      "path": "/profiles",
+      "test_type": "type_violation",
+      "field": "username",
+      "body": {
+        "username": 123
+      },
+      "expected_contract_type": "string",
+      "invalid_value": 123
+    },
+    {
+      "method": "POST",
+      "path": "/profiles",
+      "test_type": "minLength_violation",
+      "field": "username",
+      "body": {
+        "username": "aa"
+      },
+      "expected_contract_type": null,
+      "invalid_value": "aa"
+    },
+    {
+      "method": "POST",
+      "path": "/profiles",
+      "test_type": "maxLength_violation",
+      "field": "username",
+      "body": {
+        "username": "aaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_contract_type": null,
+      "invalid_value": "aaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5013",
+    "total_tests": 4,
+    "results": [
+      {
+        "method": "POST",
+        "endpoint": "/profiles",
+        "url": "http://127.0.0.1:5013/profiles",
+        "test_type": "required_field_violation",
+        "field": "username",
+        "request_body": {},
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5013): Max retries exceeded with url: /profiles (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019319349090>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/profiles",
+        "url": "http://127.0.0.1:5013/profiles",
+        "test_type": "type_violation",
+        "field": "username",
+        "request_body": {
+          "username": 123
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5013): Max retries exceeded with url: /profiles (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019319349950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/profiles",
+        "url": "http://127.0.0.1:5013/profiles",
+        "test_type": "minLength_violation",
+        "field": "username",
+        "request_body": {
+          "username": "aa"
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5013): Max retries exceeded with url: /profiles (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001931934D6E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/profiles",
+        "url": "http://127.0.0.1:5013/profiles",
+        "test_type": "maxLength_violation",
+        "field": "username",
+        "request_body": {
+          "username": "aaaaaaaaaaaaaaaaaaaaa"
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5013): Max retries exceeded with url: /profiles (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001931934CB00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "static_drifts": [],
+  "runtime_drifts": [
+    {
+      "endpoint": "/profiles",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "username",
+      "expected": "minLength 3",
+      "actual": "aa accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "minLength_violation",
+        "invalid_value": "aa",
+        "status_code": null,
+        "validation_enforced": false
+      }
+    },
+    {
+      "endpoint": "/profiles",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "username",
+      "expected": "maxLength 20",
+      "actual": "aaaaaaaaaaaaaaaaaaaaa accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "maxLength_violation",
+        "invalid_value": "aaaaaaaaaaaaaaaaaaaaa",
+        "status_code": null,
+        "validation_enforced": false
+      }
+    }
+  ],
+  "combined_drifts": [
+    {
+      "endpoint": "/profiles",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "username",
+      "expected": "minLength 3",
+      "actual": "aa accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "minLength_violation",
+        "invalid_value": "aa",
+        "status_code": null,
+        "validation_enforced": false
+      }
+    },
+    {
+      "endpoint": "/profiles",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "username",
+      "expected": "maxLength 20",
+      "actual": "aaaaaaaaaaaaaaaaaaaaa accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "maxLength_violation",
+        "invalid_value": "aaaaaaaaaaaaaaaaaaaaa",
+        "status_code": null,
+        "validation_enforced": false
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/profiles",
+        "method": "POST",
+        "issue_type": "constraint_mismatch",
+        "field_or_parameter": "username",
+        "expected": "minLength 3",
+        "actual": "aa accepted",
+        "severity": "high",
+        "evidence": {
+          "test_type": "minLength_violation",
+          "invalid_value": "aa",
+          "status_code": null,
+          "validation_enforced": false
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 2,
+      "normalized_drifts": 1,
+      "high_severity": 1,
+      "medium_severity": 0,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/profiles",
+        "issue_type": "constraint_mismatch",
+        "field_or_parameter": "username",
+        "expected": "minLength 3",
+        "actual": "aa accepted"
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case14",
+    "expected_drifts": 1,
+    "predicted_issues": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case14",
+    "description": "String minimum length constraint is not enforced",
+    "endpoint": "POST /profiles",
+    "field": "username",
+    "constraint": "minimum length 3",
+    "test_value": "ab",
+    "expected_status": 400,
+    "actual_status": 201,
+    "drift": true,
+    "severity": "medium"
+  }
+}

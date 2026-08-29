@@ -1,0 +1,416 @@
+{
+  "case_id": "case09",
+  "base_url": "http://127.0.0.1:5008",
+  "contract": {
+    "title": "Payment API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/payments",
+        "normalized_path": "/payments",
+        "method": "POST",
+        "summary": "Create a payment",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Payment created",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          },
+          "400": {
+            "description": "Invalid payment request",
+            "content_type": "application/json",
+            "schema_type": "object",
+            "properties": {
+              "error": {
+                "type": "string",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              },
+              "code": {
+                "type": "string",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              }
+            }
+          }
+        },
+        "request_body": {
+          "required": true,
+          "content_type": "application/json",
+          "schema_type": "object",
+          "properties": {
+            "amount": {
+              "type": "number",
+              "format": null,
+              "required": true,
+              "nullable": false,
+              "enum": null,
+              "minimum": null,
+              "maximum": null,
+              "minLength": null,
+              "maxLength": null,
+              "minItems": null,
+              "maxItems": null
+            }
+          }
+        }
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case09\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/payments",
+        "normalized_path": "/payments",
+        "methods": [
+          "POST"
+        ],
+        "function": "create_payment",
+        "parameters": {},
+        "query_parameters": {},
+        "request_body_fields": {},
+        "response_fields": {
+          "id": {
+            "type": "integer",
+            "value": 101,
+            "source_expression": "101"
+          },
+          "status": {
+            "type": "string",
+            "value": "created",
+            "source_expression": "'created'"
+          }
+        },
+        "response_fields_by_status": {
+          "201": [
+            {
+              "id": {
+                "type": "integer",
+                "value": 101,
+                "source_expression": "101"
+              },
+              "status": {
+                "type": "string",
+                "value": "created",
+                "source_expression": "'created'"
+              }
+            }
+          ],
+          "400": [
+            {
+              "message": {
+                "type": "string",
+                "value": "Amount is required",
+                "source_expression": "'Amount is required'"
+              }
+            }
+          ]
+        },
+        "response_statuses": [
+          {
+            "status_code": 400,
+            "condition": "'amount' not in data"
+          },
+          {
+            "status_code": 201,
+            "condition": null
+          }
+        ]
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/payments",
+      "concrete_path": "/payments",
+      "path_parameters": {},
+      "query_parameters": {},
+      "json": {
+        "amount": 1.0
+      }
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5008",
+    "requests": [
+      {
+        "method": "POST",
+        "path": "/payments",
+        "concrete_path": "/payments",
+        "path_parameters": {},
+        "query_parameters": {},
+        "json": {
+          "amount": 1.0
+        }
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/payments",
+        "method": "POST",
+        "url": "http://127.0.0.1:5008/payments",
+        "request": {
+          "path_parameters": {},
+          "query_parameters": {},
+          "json": {
+            "amount": 1.0
+          }
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5E920EBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "negative_tests": [
+    {
+      "method": "POST",
+      "path": "/payments",
+      "test_type": "required_field_violation",
+      "field": "amount",
+      "body": {},
+      "expected_contract_type": "number",
+      "invalid_value": null
+    },
+    {
+      "method": "POST",
+      "path": "/payments",
+      "test_type": "type_violation",
+      "field": "amount",
+      "body": {
+        "amount": "2"
+      },
+      "expected_contract_type": "number",
+      "invalid_value": "2"
+    }
+  ],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5008",
+    "total_tests": 2,
+    "results": [
+      {
+        "method": "POST",
+        "endpoint": "/payments",
+        "url": "http://127.0.0.1:5008/payments",
+        "test_type": "required_field_violation",
+        "field": "amount",
+        "request_body": {},
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5E92A9090>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/payments",
+        "url": "http://127.0.0.1:5008/payments",
+        "test_type": "type_violation",
+        "field": "amount",
+        "request_body": {
+          "amount": "2"
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5E92A9950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "static_drifts": [
+    {
+      "endpoint": "/payments",
+      "method": "POST",
+      "issue_type": "error_response_schema_mismatch",
+      "field_or_parameter": null,
+      "expected": {
+        "required_fields": [
+          "error",
+          "code"
+        ],
+        "fields": [
+          "code",
+          "error"
+        ]
+      },
+      "actual": {
+        "fields": [
+          "message"
+        ]
+      },
+      "severity": "high",
+      "evidence": {
+        "status_code": 400,
+        "missing_fields": [
+          "code",
+          "error"
+        ],
+        "unexpected_fields": [
+          "message"
+        ],
+        "source_condition": "'amount' not in data"
+      }
+    }
+  ],
+  "runtime_drifts": [],
+  "combined_drifts": [
+    {
+      "endpoint": "/payments",
+      "method": "POST",
+      "issue_type": "error_response_schema_mismatch",
+      "field_or_parameter": null,
+      "expected": {
+        "required_fields": [
+          "error",
+          "code"
+        ],
+        "fields": [
+          "code",
+          "error"
+        ]
+      },
+      "actual": {
+        "fields": [
+          "message"
+        ]
+      },
+      "severity": "high",
+      "evidence": {
+        "status_code": 400,
+        "missing_fields": [
+          "code",
+          "error"
+        ],
+        "unexpected_fields": [
+          "message"
+        ],
+        "source_condition": "'amount' not in data"
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/payments",
+        "method": "POST",
+        "issue_type": "error_response_schema_mismatch",
+        "field_or_parameter": null,
+        "expected": {
+          "required_fields": [
+            "error",
+            "code"
+          ],
+          "fields": [
+            "code",
+            "error"
+          ]
+        },
+        "actual": {
+          "fields": [
+            "message"
+          ]
+        },
+        "severity": "high",
+        "evidence": {
+          "status_code": 400,
+          "missing_fields": [
+            "code",
+            "error"
+          ],
+          "unexpected_fields": [
+            "message"
+          ],
+          "source_condition": "'amount' not in data"
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 1,
+      "normalized_drifts": 1,
+      "high_severity": 1,
+      "medium_severity": 0,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/payments",
+        "issue_type": "error_response_schema_mismatch",
+        "field_or_parameter": null,
+        "expected": {
+          "required_fields": [
+            "error",
+            "code"
+          ],
+          "fields": [
+            "code",
+            "error"
+          ]
+        },
+        "actual": {
+          "fields": [
+            "message"
+          ]
+        }
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case09",
+    "expected_drifts": 1,
+    "predicted_issues": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case09",
+    "description": "Error response schema does not match documented contract",
+    "endpoint": "POST /payments",
+    "condition": "amount is missing",
+    "expected_status": 400,
+    "actual_status": 400,
+    "missing_fields": [
+      "error",
+      "code"
+    ],
+    "unexpected_fields": [
+      "message"
+    ],
+    "drift": true,
+    "severity": "high"
+  }
+}

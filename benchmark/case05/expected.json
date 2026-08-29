@@ -1,0 +1,10 @@
+{
+  "case_id": "case05",
+  "description": "Query parameter type mismatch",
+  "endpoint": "GET /products",
+  "parameter": "limit",
+  "expected_type": "integer",
+  "actual_type": "string",
+  "drift": true,
+  "severity": "medium"
+}

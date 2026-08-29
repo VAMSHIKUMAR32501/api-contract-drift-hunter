@@ -1,0 +1,9 @@
+{
+  "case_id": "case15",
+  "description": "API endpoint exists in implementation but is missing from the OpenAPI contract",
+  "endpoint": "GET /admin/export",
+  "expected": "not documented",
+  "actual": "implemented",
+  "drift": true,
+  "severity": "medium"
+}

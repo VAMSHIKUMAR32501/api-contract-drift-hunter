@@ -1,0 +1,288 @@
+{
+  "case_id": "case01",
+  "base_url": "http://127.0.0.1:5000",
+  "contract": {
+    "title": "User API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/users/{id}",
+        "normalized_path": "/users/{param}",
+        "method": "GET",
+        "summary": "Get a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": null,
+            "enum": null,
+            "minimum": null,
+            "maximum": null,
+            "minLength": null,
+            "maxLength": null,
+            "minItems": null,
+            "maxItems": null
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content_type": "application/json",
+            "schema_type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              },
+              "name": {
+                "type": "string",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              },
+              "age": {
+                "type": "integer",
+                "format": null,
+                "required": true,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              }
+            }
+          }
+        },
+        "request_body": null
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case01\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/users/<int:user_id>",
+        "normalized_path": "/users/{param}",
+        "methods": [
+          "GET"
+        ],
+        "function": "get_user",
+        "parameters": {
+          "user_id": {
+            "type": "integer",
+            "location": "path",
+            "required": true
+          }
+        },
+        "query_parameters": {},
+        "request_body_fields": {},
+        "response_fields": {
+          "id": {
+            "type": "unknown",
+            "value": "user_id",
+            "source_expression": "user_id"
+          },
+          "name": {
+            "type": "string",
+            "value": "Alice",
+            "source_expression": "'Alice'"
+          },
+          "age": {
+            "type": "string",
+            "value": "25",
+            "source_expression": "'25'"
+          }
+        },
+        "response_fields_by_status": {
+          "200": [
+            {
+              "id": {
+                "type": "unknown",
+                "value": "user_id",
+                "source_expression": "user_id"
+              },
+              "name": {
+                "type": "string",
+                "value": "Alice",
+                "source_expression": "'Alice'"
+              },
+              "age": {
+                "type": "string",
+                "value": "25",
+                "source_expression": "'25'"
+              }
+            }
+          ]
+        },
+        "response_statuses": []
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/users/{id}",
+      "concrete_path": "/users/1",
+      "path_parameters": {
+        "id": 1
+      },
+      "query_parameters": {},
+      "json": null
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5000",
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/users/{id}",
+        "concrete_path": "/users/1",
+        "path_parameters": {
+          "id": 1
+        },
+        "query_parameters": {},
+        "json": null
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/users/{id}",
+        "method": "GET",
+        "url": "http://127.0.0.1:5000/users/1",
+        "request": {
+          "path_parameters": {
+            "id": 1
+          },
+          "query_parameters": {},
+          "json": null
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /users/1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000024F9CFFEBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "negative_tests": [],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5000",
+    "total_tests": 0,
+    "results": []
+  },
+  "static_drifts": [
+    {
+      "endpoint": "/users/{id}",
+      "method": "GET",
+      "issue_type": "response_type_mismatch",
+      "field_or_parameter": "age",
+      "expected": "integer",
+      "actual": "string",
+      "evidence": {
+        "source_value": "25",
+        "documented_type": "integer",
+        "observed_type": "string",
+        "source_expression": "'25'"
+      }
+    }
+  ],
+  "runtime_drifts": [],
+  "combined_drifts": [
+    {
+      "endpoint": "/users/{id}",
+      "method": "GET",
+      "issue_type": "response_type_mismatch",
+      "field_or_parameter": "age",
+      "expected": "integer",
+      "actual": "string",
+      "evidence": {
+        "source_value": "25",
+        "documented_type": "integer",
+        "observed_type": "string",
+        "source_expression": "'25'"
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/users/{id}",
+        "method": "GET",
+        "issue_type": "response_type_mismatch",
+        "field_or_parameter": "age",
+        "expected": "integer",
+        "actual": "string",
+        "evidence": {
+          "source_value": "25",
+          "documented_type": "integer",
+          "observed_type": "string",
+          "source_expression": "'25'"
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 1,
+      "normalized_drifts": 1,
+      "high_severity": 0,
+      "medium_severity": 0,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/users/{id}",
+        "issue_type": "response_type_mismatch",
+        "field_or_parameter": "age",
+        "expected": "integer",
+        "actual": "string"
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case01",
+    "expected_drifts": 1,
+    "predicted_issues": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case01",
+    "description": "Response field type mismatch",
+    "endpoint": "GET /users/{id}",
+    "field": "age",
+    "expected_type": "integer",
+    "actual_type": "string",
+    "drift": true,
+    "severity": "medium"
+  }
+}

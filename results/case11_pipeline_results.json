@@ -1,0 +1,428 @@
+{
+  "case_id": "case11",
+  "base_url": "http://127.0.0.1:5010",
+  "contract": {
+    "title": "Cart API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/cart/items",
+        "normalized_path": "/cart/items",
+        "method": "POST",
+        "summary": "Add an item to the cart",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Item added",
+            "content_type": "application/json",
+            "schema_type": "object",
+            "properties": {
+              "product_id": {
+                "type": "integer",
+                "format": null,
+                "required": false,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              },
+              "quantity": {
+                "type": "integer",
+                "format": null,
+                "required": false,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content_type": null,
+            "schema_type": null,
+            "properties": {}
+          }
+        },
+        "request_body": {
+          "required": true,
+          "content_type": "application/json",
+          "schema_type": "object",
+          "properties": {
+            "product_id": {
+              "type": "integer",
+              "format": null,
+              "required": true,
+              "nullable": false,
+              "enum": null,
+              "minimum": null,
+              "maximum": null,
+              "minLength": null,
+              "maxLength": null,
+              "minItems": null,
+              "maxItems": null
+            },
+            "quantity": {
+              "type": "integer",
+              "format": null,
+              "required": true,
+              "nullable": false,
+              "enum": null,
+              "minimum": 1,
+              "maximum": null,
+              "minLength": null,
+              "maxLength": null,
+              "minItems": null,
+              "maxItems": null
+            }
+          }
+        }
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case11\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/cart/items",
+        "normalized_path": "/cart/items",
+        "methods": [
+          "POST"
+        ],
+        "function": "add_item",
+        "parameters": {},
+        "query_parameters": {},
+        "request_body_fields": {
+          "product_id": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get(\"product_id\")",
+            "request_source": "json_body",
+            "access": "get",
+            "nullable_from_source": true,
+            "statically_typed": false
+          },
+          "quantity": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get(\"quantity\")",
+            "request_source": "json_body",
+            "access": "get",
+            "nullable_from_source": true,
+            "statically_typed": false
+          }
+        },
+        "response_fields": {
+          "product_id": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get('product_id')"
+          },
+          "quantity": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "data.get('quantity')"
+          }
+        },
+        "response_fields_by_status": {
+          "201": [
+            {
+              "product_id": {
+                "type": "unknown",
+                "value": null,
+                "source_expression": "data.get('product_id')"
+              },
+              "quantity": {
+                "type": "unknown",
+                "value": null,
+                "source_expression": "data.get('quantity')"
+              }
+            }
+          ]
+        },
+        "response_statuses": [
+          {
+            "status_code": 201,
+            "condition": null
+          }
+        ]
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/cart/items",
+      "concrete_path": "/cart/items",
+      "path_parameters": {},
+      "query_parameters": {},
+      "json": {
+        "product_id": 1,
+        "quantity": 1
+      }
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5010",
+    "requests": [
+      {
+        "method": "POST",
+        "path": "/cart/items",
+        "concrete_path": "/cart/items",
+        "path_parameters": {},
+        "query_parameters": {},
+        "json": {
+          "product_id": 1,
+          "quantity": 1
+        }
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/cart/items",
+        "method": "POST",
+        "url": "http://127.0.0.1:5010/cart/items",
+        "request": {
+          "path_parameters": {},
+          "query_parameters": {},
+          "json": {
+            "product_id": 1,
+            "quantity": 1
+          }
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5010): Max retries exceeded with url: /cart/items (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000276DEBEEBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "negative_tests": [
+    {
+      "method": "POST",
+      "path": "/cart/items",
+      "test_type": "required_field_violation",
+      "field": "product_id",
+      "body": {
+        "quantity": 1
+      },
+      "expected_contract_type": "integer",
+      "invalid_value": null
+    },
+    {
+      "method": "POST",
+      "path": "/cart/items",
+      "test_type": "type_violation",
+      "field": "product_id",
+      "body": {
+        "product_id": "2",
+        "quantity": 1
+      },
+      "expected_contract_type": "integer",
+      "invalid_value": "2"
+    },
+    {
+      "method": "POST",
+      "path": "/cart/items",
+      "test_type": "type_violation",
+      "field": "quantity",
+      "body": {
+        "product_id": 1,
+        "quantity": "2"
+      },
+      "expected_contract_type": "integer",
+      "invalid_value": "2"
+    },
+    {
+      "method": "POST",
+      "path": "/cart/items",
+      "test_type": "minimum_violation",
+      "field": "quantity",
+      "body": {
+        "product_id": 1,
+        "quantity": 0
+      },
+      "expected_contract_type": null,
+      "invalid_value": 0
+    }
+  ],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5010",
+    "total_tests": 4,
+    "results": [
+      {
+        "method": "POST",
+        "endpoint": "/cart/items",
+        "url": "http://127.0.0.1:5010/cart/items",
+        "test_type": "required_field_violation",
+        "field": "product_id",
+        "request_body": {
+          "quantity": 1
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5010): Max retries exceeded with url: /cart/items (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000276DEC89090>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/cart/items",
+        "url": "http://127.0.0.1:5010/cart/items",
+        "test_type": "type_violation",
+        "field": "product_id",
+        "request_body": {
+          "product_id": "2",
+          "quantity": 1
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5010): Max retries exceeded with url: /cart/items (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000276DEC89950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/cart/items",
+        "url": "http://127.0.0.1:5010/cart/items",
+        "test_type": "type_violation",
+        "field": "quantity",
+        "request_body": {
+          "product_id": 1,
+          "quantity": "2"
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5010): Max retries exceeded with url: /cart/items (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000276DEC8D6E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      {
+        "method": "POST",
+        "endpoint": "/cart/items",
+        "url": "http://127.0.0.1:5010/cart/items",
+        "test_type": "minimum_violation",
+        "field": "quantity",
+        "request_body": {
+          "product_id": 1,
+          "quantity": 0
+        },
+        "status_code": null,
+        "response_body": null,
+        "response_time_ms": null,
+        "rejected": false,
+        "validation_enforced": false,
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5010): Max retries exceeded with url: /cart/items (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000276DEC8CB00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "static_drifts": [],
+  "runtime_drifts": [
+    {
+      "endpoint": "/cart/items",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "quantity",
+      "expected": "minimum 1",
+      "actual": "0 accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "minimum_violation",
+        "invalid_value": 0,
+        "status_code": null,
+        "validation_enforced": false
+      }
+    }
+  ],
+  "combined_drifts": [
+    {
+      "endpoint": "/cart/items",
+      "method": "POST",
+      "issue_type": "constraint_mismatch",
+      "field_or_parameter": "quantity",
+      "expected": "minimum 1",
+      "actual": "0 accepted",
+      "severity": "high",
+      "evidence": {
+        "test_type": "minimum_violation",
+        "invalid_value": 0,
+        "status_code": null,
+        "validation_enforced": false
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/cart/items",
+        "method": "POST",
+        "issue_type": "constraint_mismatch",
+        "field_or_parameter": "quantity",
+        "expected": "minimum 1",
+        "actual": "0 accepted",
+        "severity": "high",
+        "evidence": {
+          "test_type": "minimum_violation",
+          "invalid_value": 0,
+          "status_code": null,
+          "validation_enforced": false
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 1,
+      "normalized_drifts": 1,
+      "high_severity": 1,
+      "medium_severity": 0,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/cart/items",
+        "issue_type": "constraint_mismatch",
+        "field_or_parameter": "quantity",
+        "expected": "minimum 1",
+        "actual": "0 accepted"
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case11",
+    "expected_drifts": 1,
+    "predicted_issues": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case11",
+    "description": "Request body field has incorrect type",
+    "endpoint": "POST /cart/items",
+    "field": "quantity",
+    "expected_type": "integer",
+    "actual_type": "string",
+    "drift": true,
+    "severity": "medium"
+  }
+}

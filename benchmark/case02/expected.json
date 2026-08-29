@@ -1,0 +1,10 @@
+{
+  "case_id": "case02",
+  "description": "Missing required response field",
+  "endpoint": "GET /products/{id}",
+  "field": "price",
+  "expected_type": "number",
+  "actual_type": "missing",
+  "drift": true,
+  "severity": "high"
+}

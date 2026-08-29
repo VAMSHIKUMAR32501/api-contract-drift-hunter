@@ -1,0 +1,270 @@
+{
+  "case_id": "case05",
+  "base_url": "http://127.0.0.1:5004",
+  "contract": {
+    "title": "Product Search API",
+    "version": "1.0.0",
+    "endpoints": [
+      {
+        "path": "/products",
+        "normalized_path": "/products",
+        "method": "GET",
+        "summary": "Search products",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": null,
+            "enum": null,
+            "minimum": 1,
+            "maximum": 100,
+            "minLength": null,
+            "maxLength": null,
+            "minItems": null,
+            "maxItems": null
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content_type": "application/json",
+            "schema_type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer",
+                "format": null,
+                "required": false,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              },
+              "products": {
+                "type": "array",
+                "format": null,
+                "required": false,
+                "nullable": false,
+                "enum": null,
+                "minimum": null,
+                "maximum": null,
+                "minLength": null,
+                "maxLength": null,
+                "minItems": null,
+                "maxItems": null
+              }
+            }
+          }
+        },
+        "request_body": null
+      }
+    ]
+  },
+  "source": {
+    "file": "C:\\Users\\hp\\Downloads\\api-contract-drift-hunter\\benchmark\\case05\\app.py",
+    "language": "python",
+    "framework": "flask",
+    "routes": [
+      {
+        "path": "/products",
+        "normalized_path": "/products",
+        "methods": [
+          "GET"
+        ],
+        "function": "search_products",
+        "parameters": {},
+        "query_parameters": {
+          "limit": {
+            "type": "string",
+            "location": "query",
+            "required": false,
+            "source_expression": "request.args.get(\"limit\")",
+            "conversion": null
+          }
+        },
+        "request_body_fields": {},
+        "response_fields": {
+          "limit": {
+            "type": "unknown",
+            "value": "limit",
+            "source_expression": "limit"
+          },
+          "products": {
+            "type": "unknown",
+            "value": null,
+            "source_expression": "products[<expression>]"
+          }
+        },
+        "response_fields_by_status": {
+          "200": [
+            {
+              "limit": {
+                "type": "unknown",
+                "value": "limit",
+                "source_expression": "limit"
+              },
+              "products": {
+                "type": "unknown",
+                "value": null,
+                "source_expression": "products[<expression>]"
+              }
+            }
+          ]
+        },
+        "response_statuses": []
+      }
+    ]
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/products",
+      "concrete_path": "/products",
+      "path_parameters": {},
+      "query_parameters": {
+        "limit": 1
+      },
+      "json": null
+    }
+  ],
+  "runtime": {
+    "base_url": "http://127.0.0.1:5004",
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/products",
+        "concrete_path": "/products",
+        "path_parameters": {},
+        "query_parameters": {
+          "limit": 1
+        },
+        "json": null
+      }
+    ],
+    "results": [
+      {
+        "endpoint": "/products",
+        "method": "GET",
+        "url": "http://127.0.0.1:5004/products",
+        "request": {
+          "path_parameters": {},
+          "query_parameters": {
+            "limit": 1
+          },
+          "json": null
+        },
+        "status_code": null,
+        "response_time_ms": null,
+        "content_type": null,
+        "body": null,
+        "body_type": "unknown",
+        "fields": {},
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5004): Max retries exceeded with url: /products?limit=1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000180C2ECEBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    ]
+  },
+  "negative_tests": [],
+  "negative_runtime": {
+    "base_url": "http://127.0.0.1:5004",
+    "total_tests": 0,
+    "results": []
+  },
+  "static_drifts": [
+    {
+      "endpoint": "/products",
+      "method": "GET",
+      "issue_type": "request_parameter_type_mismatch",
+      "field_or_parameter": "limit",
+      "expected": "integer",
+      "actual": "string",
+      "severity": "medium",
+      "evidence": {
+        "documented_type": "integer",
+        "source_parameter_type": "string",
+        "source_expression": "request.args.get(\"limit\")",
+        "conversion": null
+      }
+    }
+  ],
+  "runtime_drifts": [],
+  "combined_drifts": [
+    {
+      "endpoint": "/products",
+      "method": "GET",
+      "issue_type": "request_parameter_type_mismatch",
+      "field_or_parameter": "limit",
+      "expected": "integer",
+      "actual": "string",
+      "severity": "medium",
+      "evidence": {
+        "documented_type": "integer",
+        "source_parameter_type": "string",
+        "source_expression": "request.args.get(\"limit\")",
+        "conversion": null
+      }
+    }
+  ],
+  "normalized": {
+    "drifts": [
+      {
+        "endpoint": "/products",
+        "method": "GET",
+        "issue_type": "request_parameter_type_mismatch",
+        "field_or_parameter": "limit",
+        "expected": "integer",
+        "actual": "string",
+        "severity": "medium",
+        "evidence": {
+          "documented_type": "integer",
+          "source_parameter_type": "string",
+          "source_expression": "request.args.get(\"limit\")",
+          "conversion": null
+        }
+      }
+    ],
+    "summary": {
+      "raw_drifts": 1,
+      "normalized_drifts": 1,
+      "high_severity": 0,
+      "medium_severity": 1,
+      "low_severity": 0
+    }
+  },
+  "evaluator_input": {
+    "issues": [
+      {
+        "endpoint": "/products",
+        "issue_type": "request_parameter_type_mismatch",
+        "field_or_parameter": "limit",
+        "expected": "integer",
+        "actual": "string"
+      }
+    ]
+  },
+  "evaluation": {
+    "case_id": "case05",
+    "expected_drifts": 1,
+    "predicted_issues": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "expected": {
+    "case_id": "case05",
+    "description": "Query parameter type mismatch",
+    "endpoint": "GET /products",
+    "parameter": "limit",
+    "expected_type": "integer",
+    "actual_type": "string",
+    "drift": true,
+    "severity": "medium"
+  }
+}

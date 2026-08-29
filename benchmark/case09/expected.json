@@ -1,0 +1,17 @@
+{
+  "case_id": "case09",
+  "description": "Error response schema does not match documented contract",
+  "endpoint": "POST /payments",
+  "condition": "amount is missing",
+  "expected_status": 400,
+  "actual_status": 400,
+  "missing_fields": [
+    "error",
+    "code"
+  ],
+  "unexpected_fields": [
+    "message"
+  ],
+  "drift": true,
+  "severity": "high"
+}

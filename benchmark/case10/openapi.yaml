@@ -1,0 +1,45 @@
+openapi: 3.0.0
+
+info:
+  title: Customer Profile API
+  version: 1.0.0
+
+paths:
+  /customers/{id}:
+    get:
+      summary: Get customer profile
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - name
+                  - age
+                  - status
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  age:
+                    type: integer
+                  status:
+                    type: string
+                    enum:
+                      - active
+                      - inactive
+
+        "404":
+          description: Customer not found

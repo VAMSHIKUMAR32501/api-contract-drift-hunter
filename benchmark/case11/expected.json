@@ -1,0 +1,10 @@
+{
+  "case_id": "case11",
+  "description": "Request body field has incorrect type",
+  "endpoint": "POST /cart/items",
+  "field": "quantity",
+  "expected_type": "integer",
+  "actual_type": "string",
+  "drift": true,
+  "severity": "medium"
+}
