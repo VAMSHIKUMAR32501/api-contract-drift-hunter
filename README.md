@@ -198,7 +198,6 @@ The system is organized as a sequential pipeline where each stage produces struc
 
 The pipeline follows this general data flow:
 
-```text
 OpenAPI Contract
        │
        ▼
@@ -304,7 +303,7 @@ For each endpoint, the request generator creates suitable values based on the do
 
 For example:
 
-```json
+json
 {
   "product_id": 1,
   "quantity": 1
@@ -320,7 +319,7 @@ A contract can look correct during normal API execution while the implementation
 
 Consider a contract that defines:
 
-```yaml
+yaml
 quantity:
   type: integer
   minimum: 1
@@ -333,7 +332,6 @@ While static analysis examines the implementation source code, runtime detection
 
 ### Runtime Detection Flow
 
-```text
 Contract
    │
    ▼
@@ -364,7 +362,6 @@ The normalizer therefore acts as a final evidence-filtering layer before evaluat
 
 ### Normalization Flow
 
-```text
 Static Findings
       │
       │
@@ -407,5 +404,4 @@ The evaluation focuses on three standard metrics:
 
 Precision measures how many of the predicted findings are actually correct.
 
-```text
 Precision = True Positives / (True Positives + False Positives)
