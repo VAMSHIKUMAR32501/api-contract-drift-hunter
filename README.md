@@ -183,7 +183,7 @@ The system is organized as a sequential pipeline where each stage produces struc
 | ------------------------------ | ---------------------------------------------------- |
 | `contract_extractor.py`        | Extracts API information from OpenAPI specifications |
 | `source_analyzer.py`           | Analyzes implementation source code                  |
-| static_drift_detector.py      | Detects statically identifiable contract mismatches  |
+| `static_drift_detector.py`     | Detects statically identifiable contract mismatches  |
 | `request_generator.py`         | Generates valid requests from the contract           |
 | `runtime_verifier.py`          | Verifies normal API runtime behavior                 |
 | `negative_test_generator.py`   | Generates targeted invalid requests                  |
@@ -192,43 +192,220 @@ The system is organized as a sequential pipeline where each stage produces struc
 | `finding_normalizer.py`        | Deduplicates and prioritizes findings                |
 | `pipeline.py`                  | Orchestrates the complete detection pipeline         |
 | `evaluator.py`                 | Calculates benchmark evaluation metrics              |
-| `run_regression.py            | Executes the complete 15-case regression suite       |
+| `run_regression.py`            | Executes the complete 15-case regression suite       |
 
 ### Data Flow
 
 The pipeline follows this general data flow:
 
-OpenAPI
-   │
-   ▼
+```text
+OpenAPI Contract
+       │
+       ▼
 Structured Contract
-   │
-   ├──────────────► Static Analysis
-   │                     │
-   │                     ▼
-   │               Static Findings
-   │
-   ▼
+       │
+       ├──────────────► Static Analysis
+       │                     │
+       │                     ▼
+       │               Static Findings
+       │
+       ▼
 Generated Requests
+       │
+       ▼
+Running API
+       │
+       ▼
+Runtime Evidence
+       │
+       ▼
+Runtime Findings
+       │
+       └──────────────┐
+                      ▼
+               Evidence Merge
+                      │
+                      ▼
+                Normalization
+                      │
+                      ▼
+                  Evaluation
+                      │
+                      ▼
+              Final Drift Report
+
+## 🔄 Pipeline Stages
+
+The complete API Contract Drift Hunter pipeline consists of 12 stages.
+
+### Step 1 — Contract Extraction
+
+The system reads the OpenAPI specification and converts the API contract into a structured representation.
+
+The extracted information includes:
+
+- API endpoints
+- HTTP methods
+- Request bodies
+- Request properties
+- Data types
+- Required fields
+- Numeric and string constraints
+- Enum values
+- Nullability
+- Response schemas
+- Expected response status codes
+
+The structured contract becomes the source of truth for subsequent analysis.
+
+---
+
+### Step 2 — Source Analysis
+
+The implementation source code is analyzed to identify how the API actually behaves.
+
+The source analyzer extracts information such as:
+
+- Flask routes
+- HTTP methods
+- Request parameters
+- JSON request-body fields
+- Request field access patterns
+- Response fields
+- Response status codes
+- Runtime values where statically identifiable
+
+This provides implementation-side evidence that can be compared with the OpenAPI contract.
+
+---
+
+### Step 3 — Static Drift Detection
+
+The extracted contract and source-code information are compared to detect mismatches that can be identified without executing the application.
+
+Examples include:
+
+- Contract endpoint missing from implementation
+- HTTP method mismatch
+- Request field mismatch
+- Response field mismatch
+- Response status mismatch
+- Detectable type inconsistencies
+
+Static analysis provides an early layer of drift detection before runtime testing.
+
+---
+
+### Step 4 — Request Generation
+
+The system generates valid requests from the OpenAPI contract.
+
+For each endpoint, the request generator creates suitable values based on the documented schema.
+
+For example:
+
+```json
+{
+  "product_id": 1,
+  "quantity": 1
+}
+
+## 🧪 Negative Testing
+
+Negative testing is a core part of API Contract Drift Hunter.
+
+A contract can look correct during normal API execution while the implementation still fails to enforce important validation rules. Therefore, the system intentionally generates invalid requests from the OpenAPI specification and observes how the API responds.
+
+### Why Negative Testing?
+
+Consider a contract that defines:
+
+```yaml
+quantity:
+  type: integer
+  minimum: 1
+
+## 🔎 Runtime Drift Detection
+
+Runtime drift detection is responsible for converting actual API behavior into structured contract-drift findings.
+
+While static analysis examines the implementation source code, runtime detection verifies what the API actually does when requests are executed.
+
+### Runtime Detection Flow
+
+```text
+Contract
    │
    ▼
-Running API
+Negative Test
+Generation
+   │
+   ▼
+Negative Runtime
+Verification
    │
    ▼
 Runtime Evidence
    │
    ▼
-Runtime Findings
+Runtime Drift
+Detection
    │
-   └──────────────┐
-                  ▼
-           Evidence Merge
-                  │
-                  ▼
-           Normalization
-                  │
-                  ▼
-              Evaluation
-                  │
-                  ▼
-          Final Drift Report
+   ▼
+Drift Candidates
+
+## 🧹 Finding Normalization
+
+Finding normalization is the stage that converts raw drift candidates into a smaller set of precise, meaningful findings.
+
+Runtime negative testing can generate multiple observations from the same request body or endpoint. Reporting every observation independently can introduce false positives and reduce precision.
+
+The normalizer therefore acts as a final evidence-filtering layer before evaluation.
+
+### Normalization Flow
+
+```text
+Static Findings
+      │
+      │
+Runtime Findings
+      │
+      ▼
+┌──────────────────────┐
+│   Evidence Merge     │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Finding Normalizer   │
+│                      │
+│ • Deduplication      │
+│ • Canonical Keys     │
+│ • Evidence Ranking   │
+│ • Priority Rules     │
+└──────────┬───────────┘
+           │
+           ▼
+   Normalized Findings
+           │
+           ▼
+       Evaluator
+
+## 📊 Evaluation
+
+The project includes an automated evaluator that compares the drift findings produced by API Contract Drift Hunter with the expected findings defined by the benchmark.
+
+The evaluation focuses on three standard metrics:
+
+- **Precision**
+- **Recall**
+- **F1 Score**
+
+### Evaluation Metrics
+
+#### Precision
+
+Precision measures how many of the predicted findings are actually correct.
+
+```text
+Precision = True Positives / (True Positives + False Positives)
