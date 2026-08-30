@@ -174,7 +174,7 @@
           }
         },
         "status_code": 201,
-        "response_time_ms": 8.68,
+        "response_time_ms": 24.83,
         "content_type": "application/json",
         "body": {
           "email": "test",
@@ -252,7 +252,7 @@
           "email": null,
           "name": "test"
         },
-        "response_time_ms": 21.37,
+        "response_time_ms": 5.19,
         "rejected": false,
         "validation_enforced": false,
         "error": null
@@ -272,7 +272,7 @@
           "email": "test",
           "name": 123
         },
-        "response_time_ms": 31.07,
+        "response_time_ms": 5.09,
         "rejected": false,
         "validation_enforced": false,
         "error": null
@@ -292,7 +292,7 @@
           "email": 123,
           "name": "test"
         },
-        "response_time_ms": 15.99,
+        "response_time_ms": 25.35,
         "rejected": false,
         "validation_enforced": false,
         "error": null

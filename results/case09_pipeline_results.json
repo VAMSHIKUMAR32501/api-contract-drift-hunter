@@ -184,7 +184,7 @@
         "body": null,
         "body_type": "unknown",
         "fields": {},
-        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5E920EBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000028A48F2EBA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
       }
     ]
   },
@@ -226,7 +226,7 @@
         "response_time_ms": null,
         "rejected": false,
         "validation_enforced": false,
-        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5E92A9090>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000028A48FC9090>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
       },
       {
         "method": "POST",
@@ -242,7 +242,7 @@
         "response_time_ms": null,
         "rejected": false,
         "validation_enforced": false,
-        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5E92A9950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+        "error": "HTTPConnectionPool(host='127.0.0.1', port=5008): Max retries exceeded with url: /payments (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000028A48FC9950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
       }
     ]
   },
