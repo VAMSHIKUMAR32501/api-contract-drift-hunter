@@ -2239,5 +2239,1931 @@ Only start the benchmark server for the case being tested.
 
 If the application is not running, runtime verification will not be able to connect to the endpoint. This can result in connection errors and prevent runtime-based drift detection from producing valid evidence.
 
+## 🧪 Full 15-Case Regression
 
+The project includes an automated regression runner that executes the complete benchmark suite of 15 API contract drift cases.
+
+The regression suite is used to verify that improvements to one part of the pipeline do not introduce failures in other benchmark cases.
+
+### Run the Complete Regression
+
+From the project root, run:
+
+```bash
+python run_regression.py
+````
+
+The regression runner executes:
+
+```text
+case01
+case02
+case03
+case04
+case05
+case06
+case07
+case08
+case09
+case10
+case11
+case12
+case13
+case14
+case15
+```
+
+Each case is executed through the complete API Contract Drift Hunter pipeline.
+
+### Regression Process
+
+```text
+                  15 Benchmark Cases
+                         │
+                         ▼
+                 ┌─────────────────┐
+                 │ run_regression  │
+                 │      .py        │
+                 └────────┬────────┘
+                          │
+          ┌───────────────┼───────────────┐
+          ▼               ▼               ▼
+       Case 01          Case 02         Case 03
+          │               │               │
+          └───────────────┼───────────────┘
+                          │
+                         ...
+                          │
+                          ▼
+                       Case 15
+                          │
+                          ▼
+                  Pipeline Evaluation
+                          │
+                          ▼
+                 Regression Summary
+```
+
+### What Is Checked?
+
+For every case, the regression runner records:
+
+* Case ID
+* Pass/fail status
+* Precision
+* Recall
+* F1 score
+
+A case is considered **PASS** when:
+
+```text
+Precision = 1.000
+Recall    = 1.000
+F1        = 1.000
+```
+
+Otherwise, the case is marked as **FAIL**.
+
+### Regression Output
+
+A successful regression run produces a summary similar to:
+
+```text
+============================================================
+REGRESSION SUMMARY
+============================================================
+
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+
+ALL 15 CASES PASSED
+============================================================
+```
+
+### Results File
+
+The regression runner saves the summary to:
+
+```text
+results/regression_summary.json
+```
+
+The file contains:
+
+```text
+Total cases
+Passed cases
+Failed cases
+Average precision
+Average recall
+Average F1
+Individual case results
+```
+
+### Regression During Development
+
+The 15-case regression suite was also used during development to prevent changes from breaking previously working cases.
+
+For example, changes to negative-test generation initially improved one benchmark case but caused multiple other cases to fail.
+
+The development workflow was therefore:
+
+```text
+Modify Implementation
+        │
+        ▼
+Run Target Case
+        │
+        ▼
+Check Detection Result
+        │
+        ▼
+Run Full Regression
+        │
+        ▼
+15-Case Verification
+        │
+        ▼
+Commit Only Stable Changes
+```
+
+This approach helped ensure that improvements to negative testing and finding normalization remained compatible with the complete benchmark.
+
+### Final Regression Status
+
+The final implementation achieved:
+
+```text
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+```
+
+This represents a complete pass of the available 15-case benchmark.
+
+## 🏆 Final Benchmark Result
+
+The final version of API Contract Drift Hunter was validated against all 15 benchmark cases.
+
+### Final Results
+
+| Metric | Result |
+|---|---:|
+| Cases Tested | **15** |
+| Cases Passed | **15** |
+| Cases Failed | **0** |
+| Average Precision | **1.000** |
+| Average Recall | **1.000** |
+| Average F1 | **1.000** |
+
+### Result Summary
+
+```text
+============================================================
+REGRESSION SUMMARY
+============================================================
+
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+
+ALL 15 CASES PASSED
+============================================================
+````
+
+### What This Result Demonstrates
+
+The final implementation successfully detected the expected benchmark behavior across the complete 15-case test suite.
+
+The final system achieved:
+
+* **100% precision** — no false-positive findings across the benchmark evaluation.
+* **100% recall** — all expected benchmark drifts were detected.
+* **100% F1** — perfect balance between precision and recall.
+* **15/15 benchmark cases passed**.
+
+### Development and Regression Improvements
+
+The final result was achieved through iterative improvements to the detection pipeline.
+
+In particular, the project improved:
+
+1. **Negative-test generation**
+
+   * Added targeted property-level validation tests.
+   * Preserved required-field testing.
+   * Added support for type and constraint violations.
+
+2. **Runtime drift detection**
+
+   * Used actual API responses as evidence.
+   * Distinguished accepted invalid requests from correctly rejected requests.
+
+3. **Finding normalization**
+
+   * Removed duplicate findings.
+   * Prioritized meaningful required-field violations.
+   * Reduced secondary observations that could become false positives.
+
+4. **Regression validation**
+
+   * Re-ran all 15 cases after major changes.
+   * Prevented a fix for one benchmark case from breaking other cases.
+
+### Reproducible Result
+
+The final benchmark can be reproduced from the project root with:
+
+```bash
+python run_regression.py
+```
+
+The generated regression summary is saved to:
+
+```text
+results/regression_summary.json
+```
+
+Individual pipeline results are saved as:
+
+```text
+results/caseXX_pipeline_results.json
+```
+
+### Final Status
+
+```text
+✅ 15 / 15 benchmark cases passed
+✅ Precision: 1.000
+✅ Recall:    1.000
+✅ F1:        1.000
+✅ Regression complete
+```
+
+## 🧪 Example: Case 06
+
+Case 06 demonstrates why API Contract Drift Hunter uses both **negative testing** and **finding normalization**.
+
+### Contract
+
+The Case 06 API documents required request fields and their expected types.
+
+The system generates negative requests from this contract to verify whether the implementation actually enforces the documented rules.
+
+### Initial Detection
+
+During development, the runtime verifier observed multiple accepted invalid requests.
+
+The API accepted:
+
+```json
+{
+  "name": 123,
+  "email": "test"
+}
+````
+
+even though `name` was documented as a string.
+
+It also accepted a request where the required `email` field was omitted:
+
+```json
+{
+  "name": "test"
+}
+```
+
+The runtime evidence therefore contained multiple potential findings:
+
+```text
+1. missing_required_request_field → email
+2. request_body_type_mismatch     → name
+3. request_body_type_mismatch     → email
+```
+
+### Initial Evaluation
+
+Reporting all observations independently produced false positives:
+
+```text
+Expected drifts : 1
+Predicted issues: 3
+
+True positives  : 1
+False positives : 2
+False negatives : 0
+
+Precision : 0.333
+Recall    : 1.000
+F1        : 0.500
+```
+
+The problem was not that the runtime tests were incorrect. The problem was that multiple runtime observations were being treated as independent final findings.
+
+### Improvement
+
+The pipeline was improved by separating:
+
+```text
+Negative Test Generation
+          │
+          ▼
+Runtime Verification
+          │
+          ▼
+Runtime Evidence
+          │
+          ▼
+Drift Detection
+          │
+          ▼
+Finding Normalization
+```
+
+The negative-test generator continues to create relevant property-level tests, while the normalizer determines which observations should become final findings.
+
+### Required-Field Priority
+
+For Case 06, the missing required field is treated as the primary finding.
+
+The final normalized finding is:
+
+```json
+{
+  "endpoint": "/users",
+  "method": "POST",
+  "issue_type": "missing_required_request_field",
+  "field_or_parameter": "email",
+  "expected": "required",
+  "actual": "missing",
+  "severity": "high"
+}
+```
+
+The runtime evidence shows that the API returned a successful response even though the required field was missing:
+
+```json
+{
+  "test_type": "required_field_violation",
+  "field": "email",
+  "expected_status": 400,
+  "actual_status": 201,
+  "validation_enforced": false
+}
+```
+
+### Final Evaluation
+
+After the improvement:
+
+```text
+Expected drifts : 1
+Predicted issues: 1
+
+True positives  : 1
+False positives : 0
+False negatives : 0
+
+Precision : 1.000
+Recall    : 1.000
+F1        : 1.000
+```
+
+### Key Lesson
+
+Case 06 demonstrated an important design principle:
+
+> **Negative tests should provide broad evidence, while normalization should determine the precise final findings.**
+
+Disabling property-level tests globally would have reduced coverage and caused other benchmark cases to fail.
+
+Instead, the final solution preserved negative-test coverage and used evidence-based normalization to maintain precision.
+
+## 🧪 Example: Case 11
+
+Case 11 demonstrates a **request body type-validation drift** and shows why property-level negative testing must remain enabled even when the request body contains required fields.
+
+### Contract
+
+The OpenAPI contract defines the `/cart/items` endpoint:
+
+```yaml
+paths:
+  /cart/items:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - product_id
+                - quantity
+              properties:
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+                  minimum: 1
+````
+
+The important contract rules are:
+
+```text
+product_id → integer
+quantity   → integer
+quantity   → minimum 1
+product_id → required
+quantity   → required
+```
+
+### Implementation
+
+The benchmark implementation accepts values directly from the JSON request:
+
+```python
+data = request.get_json(silent=True) or {}
+
+item = {
+    "product_id": data.get("product_id"),
+    "quantity": data.get("quantity")
+}
+
+return jsonify(item), 201
+```
+
+There is no explicit runtime validation enforcing the documented property types.
+
+### Expected Drift
+
+The benchmark expects a type mismatch for `quantity`:
+
+```json
+{
+  "case_id": "case11",
+  "description": "Request body field has incorrect type",
+  "endpoint": "POST /cart/items",
+  "field": "quantity",
+  "expected_type": "integer",
+  "actual_type": "string",
+  "drift": true,
+  "severity": "medium"
+}
+```
+
+### Negative Test
+
+The negative test generator creates a type-violation request:
+
+```json
+{
+  "product_id": 1,
+  "quantity": "2"
+}
+```
+
+The contract expects:
+
+```text
+quantity → integer
+```
+
+but the invalid request supplies:
+
+```text
+quantity → string
+```
+
+### Runtime Behavior
+
+Because the implementation does not enforce the documented type, the API can accept the invalid value instead of rejecting it.
+
+This runtime behavior provides evidence of contract drift.
+
+The intended detection flow is:
+
+```text
+OpenAPI Contract
+       │
+       ▼
+quantity: integer
+       │
+       ▼
+Generate invalid value
+quantity: "2"
+       │
+       ▼
+Send request to API
+       │
+       ▼
+API accepts invalid value
+       │
+       ▼
+Runtime Drift
+       │
+       ▼
+request_body_type_mismatch
+```
+
+### Important Development Lesson
+
+Case 11 exposed a problem with an overly broad optimization.
+
+An earlier approach effectively used:
+
+```python
+if required_fields:
+    skip_property_tests()
+```
+
+This was problematic because Case 11 contains required fields **and** an independently meaningful property-level type constraint.
+
+Skipping property-level tests whenever required fields exist would prevent the system from generating the test needed to detect the Case 11 drift.
+
+### Correct Approach
+
+The final design separates required-field testing from property-level testing.
+
+```text
+Required Fields
+      │
+      ├──► Required-field tests
+      │
+      ▼
+Property Schemas
+      │
+      ├──► Type tests
+      ├──► Constraint tests
+      ├──► Enum tests
+      └──► Nullability tests
+```
+
+The presence of required fields therefore does not automatically disable property-level tests.
+
+### Regression Importance
+
+Case 11 was especially important because changes made while fixing Case 06 initially caused Cases 11–14 to fail.
+
+This demonstrated that a local fix should not be applied globally without running the complete regression suite.
+
+The development cycle became:
+
+```text
+Fix Case 06
+     │
+     ▼
+Run Case 06
+     │
+     ▼
+Run Cases 11–14
+     │
+     ▼
+Run Full 15-Case Regression
+     │
+     ▼
+Confirm No Regression
+```
+
+### Final Result
+
+After the negative-test generation and finding-normalization behavior was corrected, the complete benchmark achieved:
+
+```text
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+```
+
+### Key Lesson
+
+Case 11 demonstrates that:
+
+> **Required-field testing and property-level validation testing are independent concerns.**
+
+A robust drift detector should preserve both types of tests and use runtime evidence and finding normalization to determine which observations become final findings.
+
+## 📝 Improvement Changelog
+
+The project was developed iteratively using the 15-case benchmark as a regression suite.
+
+The main improvements focused on increasing detection coverage while preventing false positives.
+
+### Version 1 — Initial Pipeline
+
+The initial implementation established the complete end-to-end pipeline:
+
+```text
+Contract
+   ↓
+Source Analysis
+   ↓
+Static Detection
+   ↓
+Request Generation
+   ↓
+Runtime Verification
+   ↓
+Negative Testing
+   ↓
+Runtime Drift Detection
+   ↓
+Evaluation
+````
+
+This provided the foundation for automated API contract drift detection.
+
+---
+
+### Version 2 — Required-Field Negative Testing
+
+Required request-body fields were added to negative-test generation.
+
+The generator creates requests where a documented required field is omitted while other fields receive valid values.
+
+Example:
+
+```json
+{
+  "name": "test"
+}
+```
+
+when `email` is documented as required.
+
+This allows the runtime verifier to detect implementations that accept incomplete requests.
+
+---
+
+### Version 3 — Property-Level Negative Testing
+
+Property-level negative tests were added for individual schema properties.
+
+Supported tests include:
+
+```text
+type violations
+minimum violations
+maximum violations
+minLength violations
+maxLength violations
+minItems violations
+maxItems violations
+enum violations
+nullability violations
+```
+
+This significantly improved the ability to detect validation drift.
+
+---
+
+### Version 4 — Case 06 Precision Improvement
+
+Case 06 initially produced multiple runtime findings for one benchmark drift.
+
+Initial result:
+
+```text
+Expected drifts : 1
+Predicted issues: 3
+
+Precision : 0.333
+Recall    : 1.000
+F1        : 0.500
+```
+
+The issue was that multiple runtime observations were being treated as independent final findings.
+
+The pipeline was improved by strengthening finding normalization and prioritizing meaningful required-field evidence.
+
+Final Case 06 result:
+
+```text
+Expected drifts : 1
+Predicted issues: 1
+
+Precision : 1.000
+Recall    : 1.000
+F1        : 1.000
+```
+
+---
+
+### Version 5 — Avoiding Over-Aggressive Test Suppression
+
+An intermediate solution attempted to disable property-level tests whenever required fields existed:
+
+```python
+if required_fields:
+    skip_property_tests()
+```
+
+Although this could improve one case, it caused Cases 11–14 to lose important property-level coverage.
+
+This approach was therefore rejected.
+
+The final implementation keeps required-field and property-level testing as separate concerns.
+
+---
+
+### Version 6 — Case 11–14 Regression Fix
+
+Cases 11–14 demonstrated that required fields and property constraints can coexist within the same request body.
+
+The negative-test generator was adjusted so that the presence of required fields does not automatically suppress property-level tests.
+
+For example, Case 11 requires testing:
+
+```text
+quantity → integer
+```
+
+while also documenting required fields.
+
+The final design preserves both testing paths.
+
+---
+
+### Version 7 — Finding Normalization
+
+Finding normalization was strengthened to:
+
+* Deduplicate identical findings
+* Create canonical finding identities
+* Select the strongest type evidence
+* Avoid duplicate required-field findings
+* Prioritize required-field violations where appropriate
+* Preserve independent property-level drift
+
+This reduced false positives without reducing the underlying runtime test coverage.
+
+---
+
+### Version 8 — Full Regression Validation
+
+After changes to negative-test generation and normalization, the complete 15-case benchmark was repeatedly executed.
+
+The final result:
+
+```text
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+```
+
+---
+
+### Final Engineering Outcome
+
+The final implementation follows three important principles:
+
+```text
+1. Generate broad evidence
+          ↓
+2. Analyze actual runtime behavior
+          ↓
+3. Normalize into precise findings
+```
+
+This avoids solving individual benchmark cases with overly restrictive rules and instead improves the underlying detection architecture.
+
+## 🤖 Agent Trajectory
+
+The project was developed through an iterative engineering process in which each change was validated against the benchmark before being retained.
+
+The main objective was not only to make individual cases pass, but to improve the underlying detection pipeline while maintaining regression safety.
+
+### Development Strategy
+
+The development process followed this cycle:
+
+```text
+Understand Benchmark Case
+          │
+          ▼
+Inspect Contract + Implementation
+          │
+          ▼
+Identify Detection Gap
+          │
+          ▼
+Modify Relevant Agent
+          │
+          ▼
+Run Target Case
+          │
+          ▼
+Inspect Runtime Evidence
+          │
+          ▼
+Run Full Regression
+          │
+          ▼
+Keep Change Only If Regression-Safe
+````
+
+### Trajectory 1 — Establish the Baseline
+
+The first step was to understand the existing pipeline and run the benchmark cases.
+
+The baseline established the initial behavior of:
+
+* Contract extraction
+* Source analysis
+* Static detection
+* Request generation
+* Runtime verification
+* Negative testing
+* Runtime drift detection
+* Finding normalization
+* Evaluation
+
+The benchmark results were then used to identify failing cases.
+
+---
+
+### Trajectory 2 — Investigate Case 06
+
+Case 06 became an important debugging case because the system initially detected more findings than the benchmark expected.
+
+The runtime evidence showed multiple accepted invalid requests.
+
+The initial evaluation was:
+
+```text
+Expected drifts : 1
+Predicted issues: 3
+True positives  : 1
+False positives : 2
+False negatives : 0
+
+Precision : 0.333
+Recall    : 1.000
+F1        : 0.500
+```
+
+The investigation showed that the problem was not simply negative-test generation.
+
+The pipeline was collecting multiple valid runtime observations and treating them as separate final findings.
+
+This led to an investigation of:
+
+```text
+negative_test_generator.py
+runtime_drift_detector.py
+finding_normalizer.py
+```
+
+---
+
+### Trajectory 3 — Improve Required-Field Testing
+
+Required-field negative tests were retained so the system could detect APIs that accept requests missing documented required fields.
+
+For a required field such as:
+
+```text
+email
+```
+
+the generator creates a request without that field.
+
+The runtime result is then analyzed to determine whether the API incorrectly accepts the request.
+
+This allowed Case 06 to detect the expected required-field drift.
+
+---
+
+### Trajectory 4 — Add and Preserve Property-Level Testing
+
+The next challenge was preserving property-level tests.
+
+A property such as:
+
+```yaml
+quantity:
+  type: integer
+  minimum: 1
+```
+
+requires tests for:
+
+```text
+type violation
+minimum violation
+nullability violation
+```
+
+The generator was therefore designed to produce property-level tests independently of required-field tests.
+
+This became particularly important for Cases 11–14.
+
+---
+
+### Trajectory 5 — Avoid the Global `required_fields` Shortcut
+
+An intermediate implementation used logic equivalent to:
+
+```python
+if required_fields:
+    skip_property_tests()
+```
+
+This helped suppress unwanted observations in one case, but it introduced a larger regression.
+
+Cases containing both required fields and property-level constraints lost their necessary negative tests.
+
+The approach was therefore rejected.
+
+The important lesson was:
+
+> A required-field test and a property-level test represent different validation behaviors and should not be globally treated as mutually exclusive.
+
+---
+
+### Trajectory 6 — Improve Finding Normalization
+
+Instead of disabling useful tests, the pipeline was improved at the finding interpretation stage.
+
+The normalizer was strengthened to:
+
+```text
+Collect Evidence
+      │
+      ▼
+Deduplicate Findings
+      │
+      ▼
+Group Related Findings
+      │
+      ▼
+Prioritize Strong Evidence
+      │
+      ▼
+Produce Precise Findings
+```
+
+This allowed the system to maintain broad runtime test coverage while controlling the number of final reported issues.
+
+---
+
+### Trajectory 7 — Validate Case 11
+
+Case 11 was then used to verify that property-level testing remained active.
+
+The contract defines:
+
+```text
+product_id → integer
+quantity   → integer
+quantity   → minimum 1
+```
+
+The implementation accepts request values directly without enforcing the documented types.
+
+The negative test generator therefore produces a type violation such as:
+
+```json
+{
+  "product_id": 1,
+  "quantity": "2"
+}
+```
+
+This provides runtime evidence for the expected type mismatch.
+
+Case 11 helped confirm that the Case 06 fix did not disable necessary property-level detection.
+
+---
+
+### Trajectory 8 — Regression Across Cases 11–14
+
+After changes to Case 06, Cases 11–14 were explicitly checked.
+
+This was necessary because a change that improves one benchmark case can unintentionally suppress evidence needed by other cases.
+
+The development process therefore moved from:
+
+```text
+Fix One Case
+```
+
+to:
+
+```text
+Fix One Case
+      ↓
+Run Related Cases
+      ↓
+Run Full Benchmark
+      ↓
+Confirm Regression Safety
+```
+
+---
+
+### Trajectory 9 — Final 15-Case Validation
+
+After the final changes were made, the complete benchmark was executed using:
+
+```bash
+python run_regression.py
+```
+
+The final result was:
+
+```text
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+```
+
+### Engineering Lessons From the Trajectory
+
+The development process resulted in several important design lessons:
+
+1. **Do not optimize for a single benchmark case.**
+2. **Negative-test generation should preserve broad validation coverage.**
+3. **Runtime evidence should be separated from final finding interpretation.**
+4. **Required-field and property-level validation are independent concerns.**
+5. **Finding normalization is important for controlling false positives.**
+6. **Every major change should be validated against the full regression suite.**
+7. **A successful local fix is not sufficient unless it remains regression-safe.**
+
+### Final Agent Workflow
+
+The final development workflow can be summarized as:
+
+```text
+Benchmark
+   │
+   ▼
+Contract + Source Inspection
+   │
+   ▼
+Hypothesis
+   │
+   ▼
+Targeted Code Change
+   │
+   ▼
+Runtime Verification
+   │
+   ▼
+Finding Analysis
+   │
+   ▼
+Regression Testing
+   │
+   ▼
+Stable Implementation
+```
+
+This iterative approach resulted in a final implementation that passed all 15 benchmark cases.
+## 🧠 Key Engineering Lessons
+
+The development of API Contract Drift Hunter highlighted several practical lessons about building reliable automated API validation systems.
+
+### 1. Separate Contract Expectations From Runtime Behavior
+
+The OpenAPI specification describes what the API **should** do, while the running application demonstrates what the API **actually** does.
+
+The system therefore keeps these two sources separate:
+
+```text
+OpenAPI
+   │
+   ▼
+Expected Behavior
+````
+
+and:
+
+```text
+Running API
+   │
+   ▼
+Actual Behavior
+```
+
+Drift is identified by comparing the two.
+
+---
+
+### 2. Static Analysis Alone Is Not Enough
+
+Source-code analysis can identify some contract mismatches, but validation behavior is often only observable when an actual request is executed.
+
+For example, an implementation may read a field using:
+
+```python
+data.get("quantity")
+```
+
+Static analysis can identify the field, but it cannot necessarily determine whether the application rejects an invalid value such as:
+
+```json
+{
+  "quantity": "2"
+}
+```
+
+Runtime verification provides the missing evidence.
+
+---
+
+### 3. Negative Testing Is Essential
+
+Valid requests mainly demonstrate that an endpoint works under expected conditions.
+
+They do not adequately test whether the implementation enforces the contract.
+
+Negative tests deliberately violate contract rules:
+
+```text
+Required field
+      ↓
+Remove field
+
+Type constraint
+      ↓
+Use wrong type
+
+Minimum constraint
+      ↓
+Use value below minimum
+
+Enum constraint
+      ↓
+Use unsupported value
+
+Nullability
+      ↓
+Use null
+```
+
+This makes negative testing a core part of contract-drift detection.
+
+---
+
+### 4. Required Fields and Property Constraints Are Different
+
+A required-field violation answers:
+
+> Does the API require this field to exist?
+
+A type violation answers:
+
+> Does the API enforce the field's documented type?
+
+A constraint violation answers:
+
+> Does the API enforce the documented value constraint?
+
+These are different questions and should be tested independently.
+
+This lesson became especially important when working with Cases 06 and 11–14.
+
+---
+
+### 5. Do Not Fix One Benchmark With a Global Shortcut
+
+During development, disabling property-level tests whenever required fields existed appeared to solve one problem.
+
+Conceptually:
+
+```python
+if required_fields:
+    skip_property_tests()
+```
+
+However, this caused other benchmark cases to lose important tests.
+
+The better approach was to preserve test coverage and improve the interpretation of the resulting evidence.
+
+---
+
+### 6. Runtime Evidence Should Be Preserved
+
+A finding should not simply say:
+
+```text
+Type mismatch detected
+```
+
+It should retain evidence explaining why.
+
+For example:
+
+```json
+{
+  "test_type": "type_violation",
+  "field": "email",
+  "invalid_value": 123,
+  "status_code": 201,
+  "validation_enforced": false
+}
+```
+
+Evidence makes findings easier to debug, explain, and reproduce.
+
+---
+
+### 7. Test Generation and Finding Generation Are Different Problems
+
+A useful distinction emerged during development:
+
+```text
+Test Generation
+      │
+      ▼
+"What should we test?"
+```
+
+versus:
+
+```text
+Finding Generation
+      │
+      ▼
+"What actual behavior constitutes a final drift?"
+```
+
+The generator should provide sufficient coverage.
+
+The detector and normalizer should determine whether the observed behavior represents a meaningful contract violation.
+
+---
+
+### 8. Normalization Improves Precision
+
+A single endpoint can generate multiple related runtime observations.
+
+Reporting every observation independently can create false positives.
+
+Finding normalization provides a final interpretation layer:
+
+```text
+Raw Evidence
+     │
+     ▼
+Grouping
+     │
+     ▼
+Deduplication
+     │
+     ▼
+Evidence Prioritization
+     │
+     ▼
+Final Findings
+```
+
+This helped improve Case 06 from:
+
+```text
+Precision : 0.333
+Recall    : 1.000
+F1        : 0.500
+```
+
+to:
+
+```text
+Precision : 1.000
+Recall    : 1.000
+F1        : 1.000
+```
+
+---
+
+### 9. Regression Testing Is Part of Development
+
+A fix should not be considered complete after one benchmark passes.
+
+The project uses the full 15-case regression suite to verify every significant change.
+
+```text
+Code Change
+    │
+    ▼
+Target Case
+    │
+    ▼
+Related Cases
+    │
+    ▼
+Full 15-Case Regression
+    │
+    ▼
+Accept / Rework
+```
+
+This prevented improvements for one case from silently breaking other cases.
+
+---
+
+### 10. Prefer Evidence-Based Detection
+
+The final architecture follows a simple principle:
+
+```text
+Do not assume drift.
+        ↓
+Generate a targeted test.
+        ↓
+Execute it.
+        ↓
+Observe actual behavior.
+        ↓
+Compare against the contract.
+        ↓
+Report evidence-backed drift.
+```
+
+This makes the system more explainable and reduces reliance on assumptions.
+
+---
+
+### 11. Precision and Recall Must Be Balanced
+
+A detector that reports everything may achieve high recall but poor precision.
+
+A detector that reports only obvious issues may achieve high precision but miss expected drifts.
+
+The goal is therefore:
+
+```text
+High Coverage
+     +
+Low False Positives
+     =
+Reliable Drift Detection
+```
+
+The final benchmark result demonstrates this balance:
+
+```text
+Precision : 1.000
+Recall    : 1.000
+F1        : 1.000
+```
+
+---
+
+### 12. Reproducibility Matters
+
+A benchmark result is most useful when another developer can reproduce it.
+
+The project therefore documents:
+
+* Installation
+* Benchmark ports
+* Single-case execution
+* Full regression execution
+* Result file locations
+* Runtime requirements
+
+The complete regression can be executed with:
+
+```bash
+python run_regression.py
+```
+
+---
+
+### Summary
+
+The most important engineering principle from the project is:
+
+> **Generate broad, targeted runtime evidence, then use contract-aware detection and normalization to produce precise findings.**
+
+This approach allows the system to maintain strong test coverage without sacrificing final-result precision.
+
+## 🔁 Reproduction Guide
+
+This guide provides the exact steps required to reproduce the final benchmark results from a clean checkout of the repository.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/VAMSHIKUMAR32501/api-contract-drift-hunter.git
+cd api-contract-drift-hunter
+````
+
+### 2. Create a Virtual Environment
+
+On Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+On macOS/Linux:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Verify the Source
+
+Run a Python compilation check:
+
+```bash
+python -m py_compile agents/*.py
+```
+
+No `IndentationError` or other Python syntax errors should be reported.
+
+### 5. Run a Single Benchmark Case
+
+Start the Flask application for the case.
+
+Example — Case 06:
+
+```bash
+python benchmark/case06/app.py
+```
+
+The application runs on:
+
+```text
+http://127.0.0.1:5005
+```
+
+Keep the Flask server running.
+
+Open a second terminal and run:
+
+```bash
+python agents/pipeline.py case06 http://127.0.0.1:5005
+```
+
+The pipeline executes all 12 stages and writes the result to:
+
+```text
+results/case06_pipeline_results.json
+```
+
+### 6. Reproduce Case 11
+
+Start the Case 11 application:
+
+```bash
+python benchmark/case11/app.py
+```
+
+It runs on:
+
+```text
+http://127.0.0.1:5010
+```
+
+Then, from another terminal:
+
+```bash
+python agents/pipeline.py case11 http://127.0.0.1:5010
+```
+
+The result is saved to:
+
+```text
+results/case11_pipeline_results.json
+```
+
+### 7. Run the Complete Regression
+
+For the final benchmark, run:
+
+```bash
+python run_regression.py
+```
+
+The regression runner evaluates all 15 cases.
+
+```text
+case01
+case02
+case03
+case04
+case05
+case06
+case07
+case08
+case09
+case10
+case11
+case12
+case13
+case14
+case15
+```
+
+### 8. Check the Final Result
+
+A successful run should report:
+
+```text
+============================================================
+REGRESSION SUMMARY
+============================================================
+
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+
+ALL 15 CASES PASSED
+============================================================
+```
+
+### 9. Inspect Generated Results
+
+The regression summary is stored at:
+
+```text
+results/regression_summary.json
+```
+
+Individual case results are stored as:
+
+```text
+results/case01_pipeline_results.json
+results/case02_pipeline_results.json
+...
+results/case15_pipeline_results.json
+```
+
+### 10. Reproduce the Complete Workflow
+
+The complete reproducible workflow is:
+
+```text
+Clone Repository
+      │
+      ▼
+Create Virtual Environment
+      │
+      ▼
+Install Dependencies
+      │
+      ▼
+Verify Python Source
+      │
+      ▼
+Start Benchmark API
+      │
+      ▼
+Run Pipeline
+      │
+      ▼
+Inspect Case Result
+      │
+      ▼
+Run 15-Case Regression
+      │
+      ▼
+Inspect regression_summary.json
+```
+
+### Runtime Requirement
+
+For individual runtime-based pipeline execution, the corresponding Flask benchmark application must be running.
+
+The benchmark applications use ports `5000` through `5014`.
+
+For the automated regression runner, follow the execution behavior implemented in `run_regression.py` and ensure the required runtime environment is available.
+
+### Expected Final State
+
+After successful reproduction:
+
+```text
+15 / 15 cases passed
+Precision = 1.000
+Recall    = 1.000
+F1        = 1.000
+```
+
+The generated results provide the evidence needed to verify the final benchmark performance.
+
+## 🖥️ Runtime Requirement
+
+API Contract Drift Hunter performs both static analysis and runtime verification.
+
+Static analysis can inspect the contract and source code without starting the application. However, runtime-based drift detection requires the benchmark API to be running and accessible.
+
+### Required Runtime Components
+
+The runtime environment consists of:
+
+- Python 3.x
+- Flask benchmark applications
+- Local HTTP connectivity
+- The API Contract Drift Hunter pipeline
+- Required Python dependencies from `requirements.txt`
+
+### Benchmark API Servers
+
+Each benchmark case contains its own Flask application.
+
+The applications use dedicated local ports:
+
+| Case | Port | Base URL |
+|---|---:|---|
+| `case01` | 5000 | `http://127.0.0.1:5000` |
+| `case02` | 5001 | `http://127.0.0.1:5001` |
+| `case03` | 5002 | `http://127.0.0.1:5002` |
+| `case04` | 5003 | `http://127.0.0.1:5003` |
+| `case05` | 5004 | `http://127.0.0.1:5004` |
+| `case06` | 5005 | `http://127.0.0.1:5005` |
+| `case07` | 5006 | `http://127.0.0.1:5006` |
+| `case08` | 5007 | `http://127.0.0.1:5007` |
+| `case09` | 5008 | `http://127.0.0.1:5008` |
+| `case10` | 5009 | `http://127.0.0.1:5009` |
+| `case11` | 5010 | `http://127.0.0.1:5010` |
+| `case12` | 5011 | `http://127.0.0.1:5011` |
+| `case13` | 5012 | `http://127.0.0.1:5012` |
+| `case14` | 5013 | `http://127.0.0.1:5013` |
+| `case15` | 5014 | `http://127.0.0.1:5014` |
+
+### Starting an API
+
+For example, to start Case 06:
+
+```bash
+python benchmark/case06/app.py
+````
+
+The Flask server should display:
+
+```text
+Running on http://127.0.0.1:5005
+```
+
+Keep the server running while executing the pipeline.
+
+### Running the Pipeline
+
+Open another terminal in the project root:
+
+```bash
+python agents/pipeline.py case06 http://127.0.0.1:5005
+```
+
+The pipeline can then execute runtime verification and negative runtime verification against the running API.
+
+### Runtime Verification
+
+The runtime stages perform the following operations:
+
+```text
+Generated Request
+       │
+       ▼
+HTTP Request
+       │
+       ▼
+Running Flask API
+       │
+       ▼
+HTTP Response
+       │
+       ▼
+Runtime Evidence
+       │
+       ▼
+Drift Detection
+```
+
+Runtime evidence may include:
+
+* HTTP status code
+* Response body
+* Response time
+* Validation behavior
+* Accepted/rejected state
+* Runtime errors
+* Observed field values and types
+
+### Server Not Running
+
+If the benchmark application is not running, the runtime verifier may receive a connection error such as:
+
+```text
+Connection refused
+```
+
+In this situation, runtime verification cannot establish the actual behavior of the API.
+
+Therefore, when reproducing an individual runtime-based case, start the corresponding benchmark application first.
+
+### Running Multiple Cases
+
+Multiple benchmark applications can technically use different ports, but they do not need to be running simultaneously for normal single-case testing.
+
+The recommended workflow is:
+
+```text
+Start Case
+    │
+    ▼
+Run Pipeline
+    │
+    ▼
+Inspect Result
+    │
+    ▼
+Stop Server
+    │
+    ▼
+Start Next Case
+```
+
+Stop a running Flask application with:
+
+```text
+CTRL + C
+```
+
+### Static vs Runtime Execution
+
+The project combines two complementary approaches:
+
+| Mode                          | Requires API Server? | Purpose                                |
+| ----------------------------- | -------------------- | -------------------------------------- |
+| Static analysis               | No                   | Analyze source and contract            |
+| Request generation            | No                   | Generate requests from contract        |
+| Runtime verification          | Yes                  | Observe actual API behavior            |
+| Negative runtime verification | Yes                  | Test validation enforcement            |
+| Runtime drift detection       | Yes                  | Detect behavior-based drift            |
+| Evaluation                    | No*                  | Compare findings with expected results |
+
+`*` Evaluation itself does not require an API server once the required pipeline results have been generated.
+
+### Recommended Reproduction Environment
+
+For the most reliable reproduction:
+
+```text
+Windows / Linux / macOS
+        │
+        ▼
+Python 3.x
+        │
+        ▼
+Virtual Environment
+        │
+        ▼
+Project Dependencies
+        │
+        ▼
+Local Flask Benchmark API
+        │
+        ▼
+API Contract Drift Hunter
+```
+
+### Final Runtime Check
+
+Before running a runtime-based case, verify that the expected port is listening.
+
+For example, Case 06:
+
+```text
+http://127.0.0.1:5005
+```
+
+Then run:
+
+```bash
+python agents/pipeline.py case06 http://127.0.0.1:5005
+```
+
+This ensures that the runtime stages have access to the actual API implementation.
+
+
+## 🎥 Solution Video
+
+A short solution walkthrough is provided as part of the challenge submission.
+
+### Video Duration
+
+**Maximum duration: 5 minutes**
+
+### Recommended Walkthrough
+
+The video demonstrates the following:
+
+```text
+1. Problem
+      ↓
+2. Solution Architecture
+      ↓
+3. Key Agents / Pipeline
+      ↓
+4. Negative Testing
+      ↓
+5. Runtime Drift Detection
+      ↓
+6. Case 06 Demonstration
+      ↓
+7. Case 11 Demonstration
+      ↓
+8. Full 15-Case Regression
+      ↓
+9. Final Results
+````
+
+### Suggested Video Timeline
+
+| Time        | Content                                           |
+| ----------- | ------------------------------------------------- |
+| 0:00 – 0:30 | Problem and project objective                     |
+| 0:30 – 1:15 | Architecture and pipeline overview                |
+| 1:15 – 2:00 | Negative-test generation and runtime verification |
+| 2:00 – 2:45 | Case 06: required-field drift and normalization   |
+| 2:45 – 3:30 | Case 11: property-level type drift                |
+| 3:30 – 4:30 | Run the 15-case regression                        |
+| 4:30 – 5:00 | Final metrics and key engineering decisions       |
+
+### Demo Commands
+
+The video can demonstrate a single case with:
+
+```bash
+python agents/pipeline.py case06 http://127.0.0.1:5005
+```
+
+and the complete regression with:
+
+```bash
+python run_regression.py
+```
+
+### Final Result Shown in the Video
+
+The final regression should show:
+
+```text
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+
+ALL 15 CASES PASSED
+```
+
+### Video Focus
+
+The walkthrough should emphasize the engineering decisions behind the solution:
+
+* Contract-driven test generation
+* Static source analysis
+* Runtime verification
+* Negative testing
+* Evidence-based drift detection
+* Finding normalization
+* Regression-safe improvements
+
+The goal of the video is to demonstrate both **how the solution works** and **why the final architecture produces reliable results**.
 
