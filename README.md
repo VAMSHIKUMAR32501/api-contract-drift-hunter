@@ -1569,6 +1569,38 @@ ALL 15 CASES PASSED
 
 This final regression result confirms that the changes made to negative-test generation, runtime drift detection, and finding normalization did not introduce regressions across the benchmark.
 
+## 📈 Baseline vs Final Improvement
+
+The final solution was evaluated against the same 15 benchmark cases as the baseline.
+
+| Metric | Baseline | Final Solution |
+|---|---:|---:|
+| Cases Passed | 0/15 | 15/15 |
+| Average Precision | 0.113 | 1.000 |
+| Average Recall | 0.373 | 1.000 |
+| Average F1 | 0.165 | 1.000 |
+
+### Key Improvement
+
+The baseline struggled with both false positives and missed drift cases.
+
+For example:
+
+- Case 09: 1 expected drift vs 13 predicted findings
+- Cases 05, 06, 11, 12, 13 and 14: baseline predicted 0 findings despite each having an expected drift
+
+The final pipeline addresses these limitations through:
+
+- Contract-driven negative test generation
+- Runtime verification
+- Runtime drift detection
+- Evidence-based finding normalization
+- Regression validation
+
+The final implementation achieved:
+
+**15/15 cases passed with 1.000 precision, 1.000 recall, and 1.000 F1.**
+
 ## 📁 Project Structure
 
 The repository is organized into separate modules for contract processing, source analysis, runtime verification, drift detection, evaluation, benchmarking, and regression testing.
