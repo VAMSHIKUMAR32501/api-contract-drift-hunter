@@ -4167,3 +4167,434 @@ The walkthrough should emphasize the engineering decisions behind the solution:
 
 The goal of the video is to demonstrate both **how the solution works** and **why the final architecture produces reliable results**.
 
+## 🚀 Future Improvements
+
+Although the current implementation successfully passes all 15 benchmark cases, there are several areas where API Contract Drift Hunter could be extended for broader real-world API coverage.
+
+### 1. Broader OpenAPI Support
+
+Extend contract extraction to support additional OpenAPI features, including:
+
+- `$ref` references
+- Nested objects
+- `oneOf`
+- `anyOf`
+- `allOf`
+- Discriminators
+- Request parameters
+- Header schemas
+- Cookie parameters
+- Multiple request content types
+
+This would allow the system to analyze more complex production API specifications.
+
+---
+
+### 2. More Framework Support
+
+The current benchmark focuses on Flask-based Python applications.
+
+Future versions could support additional frameworks and languages, such as:
+
+```text
+Python
+ ├── Flask
+ ├── FastAPI
+ └── Django
+
+Java
+ ├── Spring Boot
+ └── JAX-RS
+
+JavaScript / TypeScript
+ ├── Express
+ ├── NestJS
+ └── Fastify
+````
+
+The source-analysis layer could use framework-specific analyzers while keeping the rest of the pipeline unchanged.
+
+---
+
+### 3. Improved Static Analysis
+
+Static analysis could be extended to understand more implementation patterns.
+
+Future improvements could include:
+
+* Stronger type inference
+* Data-flow analysis
+* Validation-library detection
+* Function-call tracing
+* Conditional response analysis
+* Better request-body propagation analysis
+* Detection of validation middleware
+
+This could improve detection of drifts before runtime execution.
+
+---
+
+### 4. Expanded Negative Test Generation
+
+The negative-test generator could support additional schema constraints and combinations.
+
+Potential additions include:
+
+```text
+pattern
+format
+exclusiveMinimum
+exclusiveMaximum
+multipleOf
+uniqueItems
+minProperties
+maxProperties
+dependentRequired
+dependentSchemas
+```
+
+It could also generate combinations of invalid fields to test more complex validation behavior.
+
+---
+
+### 5. Smarter Test Prioritization
+
+Large API specifications can contain hundreds or thousands of properties.
+
+Future versions could prioritize tests based on:
+
+* Required fields
+* High-risk constraints
+* Previously detected drift
+* Endpoint importance
+* Historical failures
+* Schema complexity
+
+This would reduce unnecessary runtime requests while maintaining high detection coverage.
+
+---
+
+### 6. Better Runtime Environment Management
+
+The current benchmark uses dedicated local Flask ports.
+
+A future implementation could automatically:
+
+```text
+Discover Case
+     ↓
+Start API
+     ↓
+Wait Until Ready
+     ↓
+Run Tests
+     ↓
+Collect Results
+     ↓
+Stop API
+```
+
+This would make the regression process easier to reproduce and reduce manual server management.
+
+---
+
+### 7. Parallel Benchmark Execution
+
+Independent benchmark cases could potentially be executed in parallel because each case uses a separate port.
+
+A future regression runner could support:
+
+```text
+             Regression
+                  │
+       ┌──────────┼──────────┐
+       ▼          ▼          ▼
+    Cases 1-5   Cases 6-10  Cases 11-15
+       │          │          │
+       └──────────┼──────────┘
+                  ▼
+          Combined Summary
+```
+
+This could significantly reduce total regression time for larger benchmark suites.
+
+---
+
+### 8. Better Finding Explanations
+
+Future findings could include a human-readable explanation describing:
+
+* What the contract requires
+* What request was generated
+* What the implementation returned
+* Why the behavior violates the contract
+* Severity
+* Recommended remediation
+
+For example:
+
+```text
+Contract requires `quantity` to be an integer.
+
+The generated negative request supplied a string value `"2"`.
+
+The API returned HTTP 201 and accepted the value.
+
+Therefore, request validation for `quantity` is not
+consistent with the OpenAPI contract.
+```
+
+This would make findings more useful to developers.
+
+---
+
+### 9. CI/CD Integration
+
+The pipeline could be integrated into CI/CD systems.
+
+For example:
+
+```text
+Pull Request
+     ↓
+Build Application
+     ↓
+Start API
+     ↓
+Run Contract Drift Hunter
+     ↓
+Evaluate Findings
+     ↓
+Pass / Fail Pipeline
+```
+
+A build could automatically fail when new contract drift is detected.
+
+---
+
+### 10. Historical Drift Tracking
+
+Future versions could compare results across commits.
+
+Example:
+
+```text
+Commit A
+  ↓
+5 drift findings
+
+Commit B
+  ↓
+7 drift findings
+
+New drift:
+  +2
+```
+
+This would make it possible to track when a contract violation was introduced.
+
+---
+
+### 11. Web-Based Reporting
+
+A web dashboard could visualize:
+
+* Total drift findings
+* Drift severity
+* Affected endpoints
+* Historical trends
+* Benchmark performance
+* Precision and recall
+* Runtime evidence
+
+This would make the system easier to use for larger API projects.
+
+---
+
+### 12. LLM-Assisted Analysis
+
+An optional LLM layer could help interpret complex source-code behavior that is difficult to infer using deterministic static analysis alone.
+
+The LLM could assist with:
+
+* Complex source-code reasoning
+* Framework-specific patterns
+* Finding explanations
+* Suggested remediation
+* Ambiguous contract behavior
+
+Deterministic runtime evidence would remain the primary source of truth for runtime findings.
+
+---
+
+### Long-Term Vision
+
+The long-term goal is to evolve API Contract Drift Hunter from a benchmark-focused detector into a continuous API contract assurance system:
+
+```text
+OpenAPI Contract
+       │
+       ▼
+Source Analysis
+       │
+       ▼
+Automatic Test Generation
+       │
+       ▼
+Runtime Verification
+       │
+       ▼
+Evidence-Based Drift Detection
+       │
+       ▼
+Normalized Findings
+       │
+       ▼
+Developer Feedback
+       │
+       ▼
+CI/CD Integration
+       │
+       ▼
+Continuous Contract Assurance
+```
+
+The current 15-case benchmark provides the foundation for extending the system toward larger and more complex real-world APIs.
+
+## ✅ Final Status
+
+API Contract Drift Hunter is complete and has been validated against the full 15-case benchmark.
+
+### 🏆 Final Benchmark
+
+```text
+============================================================
+FINAL REGRESSION RESULT
+============================================================
+
+Cases tested : 15
+Cases passed : 15
+Cases failed : 0
+
+Average Precision : 1.000
+Average Recall    : 1.000
+Average F1        : 1.000
+
+ALL 15 CASES PASSED
+============================================================
+````
+
+### Final Capabilities
+
+The completed system supports:
+
+* ✅ OpenAPI contract extraction
+* ✅ Source-code analysis
+* ✅ Static drift detection
+* ✅ Contract-driven request generation
+* ✅ Runtime API verification
+* ✅ Required-field negative testing
+* ✅ Property-level negative testing
+* ✅ Type violation detection
+* ✅ Constraint violation detection
+* ✅ Nullability testing
+* ✅ Runtime drift detection
+* ✅ Evidence-based findings
+* ✅ Finding normalization
+* ✅ False-positive reduction
+* ✅ Automated evaluation
+* ✅ 15-case regression testing
+* ✅ Structured JSON result generation
+
+### Final Architecture
+
+```text
+OpenAPI Contract
+       │
+       ▼
+Contract Extraction
+       │
+       ▼
+Source Analysis
+       │
+       ▼
+Static Drift Detection
+       │
+       ▼
+Request Generation
+       │
+       ▼
+Runtime Verification
+       │
+       ▼
+Negative Test Generation
+       │
+       ▼
+Negative Runtime Verification
+       │
+       ▼
+Runtime Drift Detection
+       │
+       ▼
+Evidence Merge
+       │
+       ▼
+Finding Normalization
+       │
+       ▼
+Evaluation
+       │
+       ▼
+Final Drift Report
+```
+
+### Final Engineering Outcome
+
+The final implementation demonstrates that API contract drift can be detected by combining:
+
+```text
+Contract Knowledge
+        +
+Static Source Analysis
+        +
+Targeted Negative Testing
+        +
+Runtime Evidence
+        +
+Finding Normalization
+        +
+Automated Evaluation
+```
+
+The solution avoids relying solely on static analysis or solely on runtime testing. Instead, it combines both approaches to produce evidence-backed contract-drift findings.
+
+### Final Submission State
+
+```text
+✅ Source code completed
+✅ Benchmark suite completed
+✅ Regression runner completed
+✅ README completed
+✅ Reproduction guide completed
+✅ Improvement changelog documented
+✅ Agent trajectory documented
+✅ Benchmark results generated
+✅ 15 / 15 cases passed
+✅ Precision = 1.000
+✅ Recall = 1.000
+✅ F1 = 1.000
+```
+
+### Repository
+
+The complete implementation is available at:
+
+[https://github.com/VAMSHIKUMAR32501/api-contract-drift-hunter](https://github.com/VAMSHIKUMAR32501/api-contract-drift-hunter)
+
+### Conclusion
+
+API Contract Drift Hunter provides an automated, evidence-based approach to identifying differences between an API's documented OpenAPI contract and its actual implementation behavior.
+
+The final 15-case regression result confirms that the implementation successfully detects the expected benchmark drifts while avoiding false-positive findings across the evaluated cases.
+
+
