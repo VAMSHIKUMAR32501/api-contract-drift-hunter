@@ -1738,23 +1738,6 @@ Regression Summary
 ```
 
 ## 🛠️ Technologies
-
-API Contract Drift Hunter is implemented primarily in Python and uses lightweight tools and libraries for contract parsing, source analysis, HTTP runtime verification, and automated evaluation.
-
-### Core Technologies
-
-| Technology | Usage |
-|---|---|
-| **Python 3** | Main programming language |
-| **OpenAPI 3.0** | API contract specification |
-| **YAML** | OpenAPI contract format |
-| **JSON** | Structured test results, findings, and evaluation output |
-| **Flask** | Benchmark API implementations |
-| **Requests / HTTP** | Runtime API verification |
-| **Python AST / Source Analysis** | Static implementation analysis |
-| **PyYAML** | Parsing OpenAPI YAML files |
-| **Git / GitHub** | Version control and project submission |
-## 🛠️ Technologies
 API Contract Drift Hunter is implemented primarily in Python and uses lightweight tools and libraries for contract parsing, source analysis, HTTP runtime verification, and automated evaluation.
 
 ### Core Technologies
