@@ -405,3 +405,59 @@ The evaluation focuses on three standard metrics:
 Precision measures how many of the predicted findings are actually correct.
 
 Precision = True Positives / (True Positives + False Positives)
+
+## 📁 Project Structure
+
+The repository is organized into separate modules for contract processing, source analysis, runtime verification, drift detection, evaluation, benchmarking, and regression testing.
+
+```text
+api-contract-drift-hunter/
+│
+├── agents/
+│   ├── contract_extractor.py
+│   ├── source_analyzer.py
+│   ├── static_drift_detector.py
+│   ├── request_generator.py
+│   ├── runtime_verifier.py
+│   ├── negative_test_generator.py
+│   ├── negative_runtime_verifier.py
+│   ├── runtime_drift_detector.py
+│   ├── finding_normalizer.py
+│   └── pipeline.py
+│
+├── baseline/
+│   ├── baseline.py
+│   └── run_baseline.py
+│
+├── benchmark/
+│   ├── case01/
+│   ├── case02/
+│   ├── case03/
+│   ├── case04/
+│   ├── case05/
+│   ├── case06/
+│   ├── case07/
+│   ├── case08/
+│   ├── case09/
+│   ├── case10/
+│   ├── case11/
+│   ├── case12/
+│   ├── case13/
+│   ├── case14/
+│   └── case15/
+│
+├── evaluator/
+│   └── evaluator.py
+│
+├── tests/
+│
+├── results/
+│   ├── case01_pipeline_results.json
+│   ├── ...
+│   ├── case15_pipeline_results.json
+│   └── regression_summary.json
+│
+├── .gitignore
+├── README.md
+├── requirements.txt
+└── run_regression.py
