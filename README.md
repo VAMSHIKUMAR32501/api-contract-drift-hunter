@@ -26,7 +26,7 @@ The system is designed to detect both statically identifiable differences and ru
 - Finding normalization and deduplication
 - Automated precision, recall, and F1 evaluation
 - 15-case benchmark regression testing
-  
+
 ## 🚨 Problem
 
 API contracts are used to describe how an API is expected to behave. However, as an application evolves, the implementation can change while the OpenAPI specification remains unchanged.
@@ -35,9 +35,46 @@ This creates **API contract drift**.
 
 For example, an OpenAPI contract may define a request field as:
 
-yaml
+```yaml
 quantity:
   type: integer
+````
+
+but the actual implementation may accept:
+
+```json
+{
+  "quantity": "2"
+}
+```
+
+The API may still return a successful response even though the request violates the documented contract.
+
+### Types of Drift
+
+This project targets several types of API contract inconsistencies:
+
+* **Request type mismatch** — an API accepts a value with an incorrect type.
+* **Missing required-field validation** — an API accepts a request even when a required field is missing.
+* **Constraint violation** — an API accepts values outside documented limits.
+* **Enum violation** — an API accepts values outside the documented enum.
+* **Nullability mismatch** — an API accepts or rejects `null` differently from the contract.
+* **Response mismatch** — the actual response does not match the documented response schema.
+* **Status-code mismatch** — the implementation returns a different status code from the documented behavior.
+* **Undocumented behavior** — the implementation exposes behavior that is not represented in the contract.
+
+### Why This Matters
+
+Contract drift can cause:
+
+* Client integration failures
+* Unexpected runtime behavior
+* Incorrect API documentation
+* Production defects
+* Difficult debugging
+* Compatibility issues between API consumers and providers
+
+The challenge is therefore to automatically compare the **documented contract** with the **actual implementation behavior** and identify meaningful drift.
 
 ## 💡 Solution
 
