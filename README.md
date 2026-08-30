@@ -197,7 +197,7 @@ The system is organized as a sequential pipeline where each stage produces struc
 ### Data Flow
 
 The pipeline follows this general data flow:
-
+```
 OpenAPI Contract
        │
        ▼
@@ -232,7 +232,7 @@ Runtime Findings
                       │
                       ▼
               Final Drift Report
-
+```
 ## 🔄 Pipeline Stages
 
 The complete API Contract Drift Hunter pipeline consists of 12 stages.
@@ -331,7 +331,7 @@ Runtime drift detection is responsible for converting actual API behavior into s
 While static analysis examines the implementation source code, runtime detection verifies what the API actually does when requests are executed.
 
 ### Runtime Detection Flow
-
+```
 Contract
    │
    ▼
@@ -351,7 +351,7 @@ Detection
    │
    ▼
 Drift Candidates
-
+```
 ## 🧹 Finding Normalization
 
 Finding normalization is the stage that converts raw drift candidates into a smaller set of precise, meaningful findings.
@@ -362,7 +362,7 @@ The normalizer therefore acts as a final evidence-filtering layer before evaluat
 
 ### Normalization Flow
 
-
+```
 Static Findings
       │
       │
@@ -388,7 +388,7 @@ Runtime Findings
            │
            ▼
        Evaluator
-
+```
 ## 📊 Evaluation
 
 The project includes an automated evaluator that compares the drift findings produced by API Contract Drift Hunter with the expected findings defined by the benchmark.
@@ -513,3 +513,398 @@ Enums
 Nullability
 Responses
 Status Codes
+```
+## 📦 Installation
+Follow the steps below to set up API Contract Drift Hunter locally.
+
+### Prerequisites
+
+Make sure the following are installed:
+
+- Python 3.x
+- pip
+- Git
+- Flask
+
+You can verify Python and pip with:
+
+```bash
+python --version
+pip --version
+````
+
+### 1. Clone the Repository
+
+Clone the GitHub repository:
+
+```bash
+git clone https://github.com/VAMSHIKUMAR32501/api-contract-drift-hunter.git
+```
+
+Move into the project directory:
+
+```bash
+cd api-contract-drift-hunter
+```
+
+### 2. Create a Virtual Environment
+
+Creating a virtual environment is recommended to keep project dependencies isolated.
+
+On Windows:
+
+```bash
+python -m venv venv
+```
+
+Activate it:
+
+```bash
+venv\Scripts\activate
+```
+
+On macOS/Linux:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+Install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+If `requirements.txt` is empty or dependencies are not listed yet, install the packages required by the current implementation manually and then update `requirements.txt`.
+
+### 4. Verify the Installation
+
+Run a Python compilation check:
+
+```bash
+python -m py_compile agents/*.py
+```
+
+You can also verify the regression runner is available:
+
+```bash
+python run_regression.py
+```
+
+### 5. Repository Structure
+
+After installation, the project should contain:
+
+```text
+api-contract-drift-hunter/
+├── agents/
+├── baseline/
+├── benchmark/
+├── evaluator/
+├── results/
+├── tests/
+├── README.md
+├── requirements.txt
+└── run_regression.py
+```
+
+### Environment Notes
+
+The benchmark applications are local Flask applications.
+
+Each benchmark case uses a different local port:
+
+```text
+case01 → 5000
+case02 → 5001
+case03 → 5002
+case04 → 5003
+case05 → 5004
+case06 → 5005
+case07 → 5006
+case08 → 5007
+case09 → 5008
+case10 → 5009
+case11 → 5010
+case12 → 5011
+case13 → 5012
+case14 → 5013
+case15 → 5014
+```
+
+The pipeline accepts the case ID and base URL as command-line arguments, allowing individual cases to be executed against their corresponding local application.
+
+## ▶️ Running a Single Case
+
+Paste this section next:
+
+````markdown
+## ▶️ Running a Single Case
+
+API Contract Drift Hunter can be executed against an individual benchmark case.
+
+Each benchmark case contains:
+
+```text
+openapi.yaml   → API contract
+app.py         → API implementation
+expected.json  → Expected benchmark result
+````
+
+### 1. Start the Benchmark API
+
+Open a terminal and start the Flask application for the case you want to test.
+
+For example, Case 06:
+
+```bash
+python benchmark/case06/app.py
+```
+
+The application starts on:
+
+```text
+http://127.0.0.1:5005
+```
+
+Keep this terminal running.
+
+### 2. Run the Pipeline
+
+Open a second terminal in the project root and run:
+
+```bash
+python agents/pipeline.py case06 http://127.0.0.1:5005
+```
+
+The pipeline executes all detection stages and prints the results to the terminal.
+
+### 3. Example Pipeline Output
+
+A successful case produces output similar to:
+
+```text
+============================================================
+STEP 1: CONTRACT EXTRACTION
+============================================================
+Endpoints extracted: 1
+
+============================================================
+STEP 2: SOURCE ANALYSIS
+============================================================
+Routes analyzed: 1
+
+============================================================
+STEP 3: STATIC DRIFT DETECTION
+============================================================
+Static drifts detected: 0
+
+============================================================
+STEP 4: REQUEST GENERATION
+============================================================
+Requests generated: 1
+
+============================================================
+STEP 5: RUNTIME VERIFICATION
+============================================================
+Runtime results: 1
+
+============================================================
+STEP 6: NEGATIVE TEST GENERATION
+============================================================
+Negative tests generated: ...
+
+============================================================
+STEP 7: NEGATIVE RUNTIME VERIFICATION
+============================================================
+Negative runtime results: ...
+
+============================================================
+STEP 8: RUNTIME DRIFT DETECTION
+============================================================
+Runtime drifts detected: ...
+
+============================================================
+STEP 9: MERGE DRIFT EVIDENCE
+============================================================
+Combined drifts: ...
+
+============================================================
+STEP 10: FINDING NORMALIZATION
+============================================================
+Normalized drifts: ...
+
+============================================================
+STEP 11: EVALUATOR FORMAT
+============================================================
+Evaluator issues: ...
+
+============================================================
+STEP 12: EVALUATION
+============================================================
+```
+
+### 4. Run Other Cases
+
+Use the corresponding case ID and application port.
+
+For example:
+
+```bash
+python benchmark/case11/app.py
+```
+
+Then, from another terminal:
+
+```bash
+python agents/pipeline.py case11 http://127.0.0.1:5010
+```
+
+Similarly:
+
+```bash
+python agents/pipeline.py case01 http://127.0.0.1:5000
+python agents/pipeline.py case02 http://127.0.0.1:5001
+python agents/pipeline.py case03 http://127.0.0.1:5002
+...
+python agents/pipeline.py case15 http://127.0.0.1:5014
+```
+
+### 5. Results
+
+After execution, the pipeline saves the complete result under:
+
+```text
+results/
+```
+
+For example:
+
+```text
+results/case06_pipeline_results.json
+```
+
+The result contains:
+
+```text
+Contract information
+Source analysis
+Runtime results
+Negative runtime results
+Raw drift findings
+Normalized findings
+Evaluation results
+Final drift report
+```
+
+### ⚠️ Runtime Requirement
+
+For cases that require runtime verification, the corresponding Flask application must be running before executing the pipeline.
+
+If the API is not running, runtime verification cannot connect to the application and the runtime stages may not produce valid drift evidence.
+
+### Stopping the API
+
+After testing a case, return to the terminal running Flask and press:
+
+```text
+CTRL + C
+```
+## 🔌 Benchmark Ports
+
+Each benchmark case contains a local Flask application running on a dedicated port.
+
+This allows multiple benchmark applications to be tested independently without port conflicts.
+
+| Case | Application | Port | Base URL |
+|---|---|---:|---|
+| `case01` | `benchmark/case01/app.py` | 5000 | `http://127.0.0.1:5000` |
+| `case02` | `benchmark/case02/app.py` | 5001 | `http://127.0.0.1:5001` |
+| `case03` | `benchmark/case03/app.py` | 5002 | `http://127.0.0.1:5002` |
+| `case04` | `benchmark/case04/app.py` | 5003 | `http://127.0.0.1:5003` |
+| `case05` | `benchmark/case05/app.py` | 5004 | `http://127.0.0.1:5004` |
+| `case06` | `benchmark/case06/app.py` | 5005 | `http://127.0.0.1:5005` |
+| `case07` | `benchmark/case07/app.py` | 5006 | `http://127.0.0.1:5006` |
+| `case08` | `benchmark/case08/app.py` | 5007 | `http://127.0.0.1:5007` |
+| `case09` | `benchmark/case09/app.py` | 5008 | `http://127.0.0.1:5008` |
+| `case10` | `benchmark/case10/app.py` | 5009 | `http://127.0.0.1:5009` |
+| `case11` | `benchmark/case11/app.py` | 5010 | `http://127.0.0.1:5010` |
+| `case12` | `benchmark/case12/app.py` | 5011 | `http://127.0.0.1:5011` |
+| `case13` | `benchmark/case13/app.py` | 5012 | `http://127.0.0.1:5012` |
+| `case14` | `benchmark/case14/app.py` | 5013 | `http://127.0.0.1:5013` |
+| `case15` | `benchmark/case15/app.py` | 5014 | `http://127.0.0.1:5014` |
+
+### Example: Case 06
+
+Start the Case 06 application:
+
+```bash
+python benchmark/case06/app.py
+````
+
+The application runs at:
+
+```text
+http://127.0.0.1:5005
+```
+
+Then open another terminal and run:
+
+```bash
+python agents/pipeline.py case06 http://127.0.0.1:5005
+```
+
+### Example: Case 11
+
+Start the Case 11 application:
+
+```bash
+python benchmark/case11/app.py
+```
+
+The application runs at:
+
+```text
+http://127.0.0.1:5010
+```
+
+Then run:
+
+```bash
+python agents/pipeline.py case11 http://127.0.0.1:5010
+```
+
+### Port Mapping Rule
+
+The benchmark follows a sequential port assignment:
+
+```text
+case01 → 5000
+case02 → 5001
+...
+case15 → 5014
+```
+
+The pipeline accepts the base URL as an optional command-line argument:
+
+```text
+python agents/pipeline.py <case_id> <base_url>
+```
+
+Example:
+
+```bash
+python agents/pipeline.py case06 http://127.0.0.1:5005
+```
+
+### Important
+
+Only start the benchmark server for the case being tested.
+
+If the application is not running, runtime verification will not be able to connect to the endpoint. This can result in connection errors and prevent runtime-based drift detection from producing valid evidence.
+
+
+
