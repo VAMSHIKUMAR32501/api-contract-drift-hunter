@@ -362,6 +362,7 @@ The normalizer therefore acts as a final evidence-filtering layer before evaluat
 
 ### Normalization Flow
 
+
 Static Findings
       │
       │
@@ -461,3 +462,54 @@ api-contract-drift-hunter/
 ├── README.md
 ├── requirements.txt
 └── run_regression.py
+
+```
+## 🛠️ Technologies
+
+API Contract Drift Hunter is implemented primarily in Python and uses lightweight tools and libraries for contract parsing, source analysis, HTTP runtime verification, and automated evaluation.
+
+### Core Technologies
+
+| Technology | Usage |
+|---|---|
+| **Python 3** | Main programming language |
+| **OpenAPI 3.0** | API contract specification |
+| **YAML** | OpenAPI contract format |
+| **JSON** | Structured test results, findings, and evaluation output |
+| **Flask** | Benchmark API implementations |
+| **Requests / HTTP** | Runtime API verification |
+| **Python AST / Source Analysis** | Static implementation analysis |
+| **PyYAML** | Parsing OpenAPI YAML files |
+| **Git / GitHub** | Version control and project submission |
+
+### Python
+
+Python is used throughout the project for:
+
+- Contract extraction
+- Source-code analysis
+- Test generation
+- Runtime verification
+- Drift detection
+- Finding normalization
+- Evaluation
+- Regression testing
+
+### OpenAPI
+
+OpenAPI 3.0 specifications provide the expected API contract.
+
+The system extracts information such as:
+
+```text
+Endpoints
+Methods
+Request Bodies
+Properties
+Types
+Required Fields
+Constraints
+Enums
+Nullability
+Responses
+Status Codes
